@@ -46,6 +46,24 @@
   --breakpoint-nav: 67.5rem;
 }
 
+/*
+ * Scroll-driven scenes need room to breathe, so each falls back to a plain static layout where its
+ * pin can't run well (short viewports such as phones in landscape) or where the visitor asked for
+ * reduced motion (the GSAP timelines are skipped, so the layout can't depend on them).
+ *   pinned: the horizontal "journey" act: wide enough, tall enough, motion allowed.
+ *   flat:   the "problem" act, which pins at every width: short viewport or reduced motion.
+ * Keep these queries in sync with the matchMedia strings in JourneyScene and ChaosScene.
+ */
+@custom-variant pinned (@media (min-width: 768px) and (min-height: 640px) and (prefers-reduced-motion: no-preference));
+@custom-variant flat {
+  @media (max-height: 639.98px) {
+    @slot;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    @slot;
+  }
+}
+
 @layer base {
   html {
     overflow-x: clip;

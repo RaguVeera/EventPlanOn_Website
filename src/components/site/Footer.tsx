@@ -34,7 +34,7 @@ export function Footer() {
   return (
     <footer data-tone="dark" className="overflow-hidden bg-navy pt-20 text-navy-text">
       <Container>
-        <div className="grid grid-cols-2 gap-10 lg:grid-cols-[minmax(0,1.5fr)_repeat(4,minmax(0,1fr))]">
+        <div className="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-x-6 gap-y-10 sm:gap-x-10 lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))_minmax(0,1.3fr)] lg:gap-x-8 xl:gap-x-10">
           <div className="col-span-2 lg:col-span-1">
             <p className="max-w-[26ch] font-serif text-[28px] leading-[1.1] text-white">
               Plan every event like it's the only one.
@@ -87,7 +87,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="max-[28rem]:col-span-2">
             <h4 className="mb-3.5 text-[13px] tracking-[.12em] text-white uppercase">Explore</h4>
             <ul className="m-0 grid list-none gap-2.5 p-0 text-[14.5px]">
               <li><SiteLink className={linkClass} to={PATHS.ai}>AI assistant</SiteLink></li>
@@ -97,12 +97,12 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="max-[28rem]:col-span-2">
             <h4 className="mb-3.5 text-[13px] tracking-[.12em] text-white uppercase">Get started</h4>
             <ul className="m-0 grid list-none gap-2.5 p-0 text-[14.5px]">
               <li><a className={linkClass} href={ROUTES.signup} target="_blank" rel="noopener">Start free trial</a></li>
               <li><a className={linkClass} href={ROUTES.login} target="_blank" rel="noopener">Log in</a></li>
-              <li><a className={linkClass} href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></li>
+              <li><a className={`${linkClass} [overflow-wrap:anywhere]`} href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></li>
             </ul>
           </div>
         </div>

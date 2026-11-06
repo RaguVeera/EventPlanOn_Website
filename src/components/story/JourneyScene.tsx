@@ -30,7 +30,9 @@ export function JourneyScene() {
       if (prefersReducedMotion() || !root.current || !track.current) return
       const mm = gsap.matchMedia()
 
-      mm.add('(min-width: 768px)', () => {
+      // Must match the `pinned:` variant in index.css. Phones, short landscape screens and
+      // reduced-motion visitors get the plain stacked layout instead.
+      mm.add('(min-width: 768px) and (min-height: 640px)', () => {
         const el = track.current!
         const distance = () => el.scrollWidth - window.innerWidth
         gsap.to(el, {
@@ -65,9 +67,9 @@ export function JourneyScene() {
   )
 
   return (
-    <section ref={root} id="journey" className="relative overflow-hidden bg-ivory md:h-screen">
+    <section ref={root} id="journey" className="relative overflow-hidden bg-ivory pinned:h-screen">
       {/* Fixed chapter header + progress while the track moves */}
-      <div className="px-4 pt-16 md:absolute md:inset-x-0 md:top-0 md:z-10 md:px-8 md:pt-24">
+      <div className="px-4 pt-16 md:px-8 pinned:absolute pinned:inset-x-0 pinned:top-0 pinned:z-10 pinned:pt-24">
         <div className="mx-auto flex max-w-[1200px] items-end justify-between gap-6">
           <div>
             <Eyebrow>Act 02 · The journey</Eyebrow>
@@ -75,7 +77,7 @@ export function JourneyScene() {
               From first idea to <em className="text-coral">final report.</em>
             </h2>
           </div>
-          <ol className="m-0 hidden list-none gap-2 p-0 md:flex" aria-label="Lifecycle progress">
+          <ol className="m-0 hidden list-none gap-2 p-0 pinned:flex" aria-label="Lifecycle progress">
             {STAGES.map((s, i) => (
               <li
                 key={s.title}
@@ -92,25 +94,25 @@ export function JourneyScene() {
         </div>
       </div>
 
-      <div ref={track} className="flex flex-col md:h-full md:w-[500vw] md:flex-row">
+      <div ref={track} className="flex flex-col pinned:h-full pinned:w-[500vw] pinned:flex-row">
         {STAGES.map((s, i) => {
           const { View, url } = SCREENS[i]
           const on = i === active
           return (
             <article
               key={s.title}
-              className="relative grid items-center gap-8 px-4 py-14 md:h-full md:w-screen md:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] md:gap-14 md:px-[max(32px,calc((100vw-1136px)/2))] md:pt-40 md:pb-20"
+              className="relative mx-auto grid w-full max-w-[1200px] grid-cols-[minmax(0,1fr)] items-center gap-8 px-4 py-14 md:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] md:gap-14 md:px-8 pinned:mx-0 pinned:h-full pinned:w-screen pinned:max-w-none pinned:px-[max(32px,calc((100vw-1136px)/2))] pinned:pt-40 pinned:pb-20"
             >
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute -top-2 right-3 font-serif text-[clamp(140px,26vw,380px)] leading-none font-medium text-coral/10 select-none md:right-10 md:top-24"
+                className="pointer-events-none absolute -top-2 right-3 font-serif text-[clamp(140px,26vw,380px)] leading-none font-medium text-coral/10 select-none md:right-10 pinned:top-24"
               >
                 0{i + 1}
               </span>
               <div
                 className={cn(
                   'relative grid content-center gap-5 transition-[opacity,transform] duration-500 md:max-w-[520px]',
-                  on ? 'md:translate-y-0 md:opacity-100' : 'md:translate-y-4 md:opacity-30',
+                  on ? 'pinned:translate-y-0 pinned:opacity-100' : 'pinned:translate-y-4 pinned:opacity-30',
                 )}
               >
                 <Eyebrow>
@@ -130,7 +132,7 @@ export function JourneyScene() {
               <div
                 className={cn(
                   'relative transition-[opacity,transform] duration-700',
-                  on ? 'md:translate-y-0 md:scale-100 md:opacity-100' : 'md:translate-y-8 md:scale-[.96] md:opacity-40',
+                  on ? 'pinned:translate-y-0 pinned:scale-100 pinned:opacity-100' : 'pinned:translate-y-8 pinned:scale-[.96] pinned:opacity-40',
                 )}
               >
                 <AppFrame url={`app.eventplanon.com/${url}`}>
@@ -144,7 +146,7 @@ export function JourneyScene() {
         })}
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 hidden h-1 bg-line md:block" aria-hidden="true">
+      <div className="absolute inset-x-0 bottom-0 hidden h-1 bg-line pinned:block" aria-hidden="true">
         <div data-journey-bar className="h-full origin-left scale-x-0 bg-coral" />
       </div>
     </section>

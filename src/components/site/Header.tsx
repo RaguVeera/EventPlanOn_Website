@@ -48,7 +48,7 @@ const NAV: NavItem[] = [
 export function Logo({ className }: { className?: string }) {
   return (
     <SiteLink to={PATHS.home} aria-label="Event Plan On home" className={cn('block shrink-0', className)}>
-      <img src={logo} alt="Event Plan On" width={1600} height={306} className="h-7 w-auto sm:h-8" />
+      <img src={logo} alt="Event Plan On" width={1600} height={306} className="h-6 w-auto min-[375px]:h-7 sm:h-8" />
     </SiteLink>
   )
 }
@@ -166,10 +166,10 @@ export function Header() {
           mobileOpen && 'border-transparent bg-transparent backdrop-blur-none',
         )}
       >
-        <Container className="flex h-[72px] items-center gap-6">
+        <Container className="flex h-[72px] items-center gap-3 sm:gap-6">
           <Logo />
 
-          <nav aria-label="Primary" className="ml-6 hidden lg:block">
+          <nav aria-label="Primary" className="ml-6 hidden nav:block">
             <ul className="m-0 flex list-none items-center gap-1 p-0">
               {NAV.map((item) => {
                 const open = openMenu === item.label
@@ -234,7 +234,12 @@ export function Header() {
             <Button to={PATHS.demo} variant={dark ? 'line' : 'dark'} size="sm" className="hidden md:inline-flex">
               Book a demo
             </Button>
-            <Button route="signup" size="sm" className="max-sm:h-9 max-sm:px-3.5 max-sm:text-[13px]">
+            {/* Phones: compact pill. Under 340px there's no room, and the CTA is the first button in the menu. */}
+            <Button
+              route="signup"
+              size="sm"
+              className="max-sm:h-9 max-sm:px-3.5 max-sm:text-[13px] max-[374px]:px-3 max-[374px]:text-[12.5px] max-[339px]:hidden"
+            >
               Start free trial
             </Button>
             <button
@@ -244,7 +249,7 @@ export function Header() {
               aria-controls="mobile-menu"
               onClick={() => setMobileOpen((o) => !o)}
               className={cn(
-                'relative z-[110] grid size-11 place-items-center rounded-full lg:hidden',
+                'relative z-[110] grid size-11 place-items-center rounded-full nav:hidden',
                 dark || mobileOpen ? 'text-white hover:bg-white/10' : 'hover:bg-sand',
               )}
             >
@@ -261,7 +266,7 @@ export function Header() {
         id="mobile-menu"
         aria-hidden={!mobileOpen}
         className={cn(
-          'fixed inset-0 z-[105] overflow-y-auto bg-navy px-6 pt-28 pb-10 text-white transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(.76,0,.24,1)] lg:hidden',
+          'fixed inset-0 z-[105] overflow-y-auto bg-navy px-6 pt-28 pb-10 text-white transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(.76,0,.24,1)] nav:hidden',
           mobileOpen
             ? 'visible [clip-path:circle(150%_at_calc(100%-44px)_36px)]'
             : 'invisible [clip-path:circle(0%_at_calc(100%-44px)_36px)]',

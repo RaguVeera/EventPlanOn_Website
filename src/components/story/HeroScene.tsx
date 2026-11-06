@@ -105,7 +105,7 @@ export function HeroScene() {
             <HeroDashboard />
           </div>
 
-          <div data-par="70" className="absolute -top-8 -left-2 hidden sm:block lg:-left-10">
+          <div data-par="70" className="absolute -top-8 -left-2 hidden sm:block xl:-left-10">
             <div data-chip className={`${chip} static`}>
               <MegaIcon name="spark" size={30} />
               <div>
@@ -114,7 +114,7 @@ export function HeroScene() {
               </div>
             </div>
           </div>
-          <div data-par="120" className="absolute top-24 -right-2 hidden sm:block lg:-right-12">
+          <div data-par="120" className="absolute top-24 -right-2 hidden sm:block xl:-right-12">
             <div data-chip className={`${chip} static`}>
               <span className="grid size-[30px] place-items-center rounded-[9px] bg-ok-soft text-ok-ink">
                 <Icon name="guest" size={17} />

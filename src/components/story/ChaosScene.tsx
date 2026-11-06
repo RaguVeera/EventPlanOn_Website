@@ -33,98 +33,104 @@ export function ChaosScene() {
       if (prefersReducedMotion() || !root.current) return
       const stage = root.current.querySelector<HTMLElement>('[data-chaos-stage]')!
       const scraps = gsap.utils.toArray<HTMLElement>('[data-scrap]')
+      const mm = gsap.matchMedia()
 
-      gsap.set(scraps, { rotation: (i) => SCRAPS[i].r })
-      gsap.set('[data-order]', { scale: 0.7, opacity: 0, y: 60 })
-      gsap.set('[data-text-b]', { opacity: 0, y: 40 })
+      // Short viewports (phones in landscape) can't fit the pinned scene; they get the flat layout.
+      mm.add('(min-height: 640px)', () => {
+        gsap.set(scraps, { rotation: (i) => SCRAPS[i].r })
+        gsap.set('[data-order]', { scale: 0.7, opacity: 0, y: 60 })
+        gsap.set('[data-text-b]', { opacity: 0, y: 40 })
 
-      const tl = gsap.timeline({
-        defaults: { ease: 'power2.inOut' },
-        scrollTrigger: {
-          trigger: root.current,
-          start: 'top top',
-          end: '+=2400',
-          pin: true,
-          scrub: 0.7,
-          invalidateOnRefresh: true,
-        },
+        const tl = gsap.timeline({
+          defaults: { ease: 'power2.inOut' },
+          scrollTrigger: {
+            trigger: root.current,
+            start: 'top top',
+            end: '+=2400',
+            pin: true,
+            scrub: 0.7,
+            invalidateOnRefresh: true,
+          },
+        })
+
+        /* a little shake of anxiety first */
+        tl.to(scraps, { x: (i) => (i % 2 ? 14 : -14), y: (i) => (i % 3 ? -10 : 10), rotation: (i) => SCRAPS[i].r * 1.4, duration: 0.6, ease: 'sine.inOut' })
+          .to(
+            scraps,
+            {
+              // Fly each scrap from wherever it is now to the centre of the dashboard.
+              x: (_i, el: HTMLElement) => {
+                const r = el.getBoundingClientRect()
+                const s = stage.getBoundingClientRect()
+                return (gsap.getProperty(el, 'x') as number) + (s.left + s.width / 2 - (r.left + r.width / 2))
+              },
+              y: (_i, el: HTMLElement) => {
+                const r = el.getBoundingClientRect()
+                const s = stage.getBoundingClientRect()
+                const targetY = s.top + Math.min(s.height * 0.4, 190)
+                return (gsap.getProperty(el, 'y') as number) + (targetY - (r.top + r.height / 2))
+              },
+              rotation: 0,
+              scale: 0.2,
+              opacity: 0,
+              duration: 1.6,
+              ease: 'power3.in',
+              stagger: { each: 0.06, from: 'random' },
+            },
+            '>0.1',
+          )
+          .to('[data-text-a]', { opacity: 0, y: -40, duration: 0.6 }, '<0.2')
+          .to('[data-text-b]', { opacity: 1, y: 0, duration: 0.7 }, '<0.15')
+          .to('[data-order]', { scale: 1, opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '<-0.2')
+          .to({}, { duration: 0.8 })
       })
 
-      /* a little shake of anxiety first */
-      tl.to(scraps, { x: (i) => (i % 2 ? 14 : -14), y: (i) => (i % 3 ? -10 : 10), rotation: (i) => SCRAPS[i].r * 1.4, duration: 0.6, ease: 'sine.inOut' })
-        .to(
-          scraps,
-          {
-            // Fly each scrap from wherever it is now to the centre of the dashboard.
-            x: (_i, el: HTMLElement) => {
-              const r = el.getBoundingClientRect()
-              const s = stage.getBoundingClientRect()
-              return (gsap.getProperty(el, 'x') as number) + (s.left + s.width / 2 - (r.left + r.width / 2))
-            },
-            y: (_i, el: HTMLElement) => {
-              const r = el.getBoundingClientRect()
-              const s = stage.getBoundingClientRect()
-              const targetY = s.top + Math.min(s.height * 0.4, 190)
-              return (gsap.getProperty(el, 'y') as number) + (targetY - (r.top + r.height / 2))
-            },
-            rotation: 0,
-            scale: 0.2,
-            opacity: 0,
-            duration: 1.6,
-            ease: 'power3.in',
-            stagger: { each: 0.06, from: 'random' },
-          },
-          '>0.1',
-        )
-        .to('[data-text-a]', { opacity: 0, y: -40, duration: 0.6 }, '<0.2')
-        .to('[data-text-b]', { opacity: 1, y: 0, duration: 0.7 }, '<0.15')
-        .to('[data-order]', { scale: 1, opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '<-0.2')
-        .to({}, { duration: 0.8 })
+      return () => mm.revert()
     },
     { scope: root },
   )
 
   return (
-    <section ref={root} id="problem" data-tone="dark" className="relative h-screen overflow-hidden bg-navy text-white">
+    <section ref={root} id="problem" data-tone="dark" className="relative h-screen overflow-hidden bg-navy text-white flat:h-auto flat:py-24">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <i className="absolute -top-60 -right-40 size-[760px] rounded-full bg-[radial-gradient(closest-side,rgba(233,90,120,.22),transparent)]" />
         <i className="absolute -bottom-60 -left-40 size-[640px] rounded-full bg-[radial-gradient(closest-side,rgba(59,111,216,.2),transparent)]" />
       </div>
 
-      <Container className="relative h-full">
-        <div className="absolute top-24 left-4 md:top-28 md:left-8">
+      <Container className="relative h-full flat:h-auto">
+        <div className="absolute top-24 left-4 md:top-28 md:left-8 flat:static">
           <Eyebrow className="text-coral-light">Act 01 · The problem</Eyebrow>
-          <div className="relative mt-4 h-[clamp(120px,20vw,260px)] w-[min(92vw,900px)]">
+          <div className="relative mt-4 h-[clamp(120px,20vw,260px)] w-[min(92vw,900px)] flat:h-auto flat:w-auto">
             <h2
               data-text-a
-              className="absolute inset-0 font-serif text-[clamp(36px,6vw,92px)] leading-[.98] font-medium tracking-[-0.03em]"
+              className="absolute inset-0 font-serif flat:hidden text-[clamp(36px,6vw,92px)] leading-[.98] font-medium tracking-[-0.03em]"
             >
               Your event lives in <em className="text-coral-light">twelve places.</em>
             </h2>
             <h2
               data-text-b
-              className="absolute inset-0 font-serif text-[clamp(36px,6vw,92px)] leading-[.98] font-medium tracking-[-0.03em]"
+              className="absolute inset-0 font-serif flat:static text-[clamp(36px,6vw,92px)] leading-[.98] font-medium tracking-[-0.03em]"
             >
               Now it lives in <em className="text-coral-light">one.</em>
             </h2>
           </div>
         </div>
 
-        <div data-chaos-stage className="absolute inset-x-4 top-[38%] bottom-6 md:inset-x-8 md:top-[34%]">
+        <div data-chaos-stage className="absolute inset-x-4 top-[38%] bottom-6 md:inset-x-8 md:top-[34%] flat:static flat:mt-10">
           {SCRAPS.map((s) => (
             <span
               key={s.label}
               data-scrap
               style={{ left: `${s.x}%`, top: `${s.y - 30}%` }}
-              className={`absolute max-w-[46%] rounded-lg px-3 py-2 text-[12px] font-semibold shadow-[0_10px_30px_-10px_rgba(0,0,0,.6)] sm:text-[13.5px] ${s.tone}`}
+              className={`absolute flat:hidden max-w-[46%] rounded-lg px-3 py-2 text-[12px] font-semibold shadow-[0_10px_30px_-10px_rgba(0,0,0,.6)] sm:text-[13.5px] ${s.tone}`}
             >
               {s.label}
             </span>
           ))}
 
-          <div data-order className="absolute inset-x-0 top-0 mx-auto w-full max-w-[860px]">
+          <div data-order className="absolute inset-x-0 top-0 mx-auto w-full max-w-[860px] flat:static">
             <AppFrame url="app.eventplanon.com/events/partner-summit/budget" className="text-ink">
-              <AppMain className="max-h-[52vh] overflow-hidden p-4 md:p-[22px]">
+              <AppMain className="max-h-[52vh] overflow-hidden p-4 md:p-[22px] flat:max-h-none">
                 <BudgetView />
               </AppMain>
             </AppFrame>
