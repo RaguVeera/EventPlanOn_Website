@@ -1,7 +1,7 @@
 import { useRef, useState, type CSSProperties } from 'react'
 import { cn } from '@/lib/cn'
 import { HUB_NODES } from '@/data/content'
-import { EASE_OUT, ScrollTrigger, formatNumber, gsap, prefersReducedMotion, useGSAP } from '@/lib/gsap'
+import { EASE_OUT, ScrollTrigger, gsap, prefersReducedMotion, useGSAP } from '@/lib/gsap'
 import type { HubKey } from '@/types'
 import { Container, Section, SectionHead } from '@/components/ui/layout'
 import { MegaIcon } from '@/components/ui/atoms'
@@ -33,12 +33,11 @@ interface Step {
   vals: Partial<Record<HubKey, string | (() => string)>>
 }
 
-export function ConnectedHub({ className, act = 'Connected by design' }: { className?: string; act?: string }) {
+export function ConnectedHub({ className, act = 'Always in sync' }: { className?: string; act?: string }) {
   const root = useRef<HTMLElement>(null)
   const [values, setValues] = useState<Values>(initialValues)
   const [lit, setLit] = useState<HubKey[]>([])
-  const [message, setMessage] = useState('All tools in sync')
-  const counters = useRef({ registered: 842, confirmed: 612 })
+  const [message, setMessage] = useState('Budget, suppliers and expenses in sync')
 
   useGSAP(
     () => {
@@ -59,29 +58,30 @@ export function ConnectedHub({ className, act = 'Connected by design' }: { class
 
       const STEPS: Step[] = [
         {
-          from: 'registration',
-          to: ['guests'],
-          msg: 'New registration received',
-          pre: () => {
-            counters.current.registered += 1
-            setVal('registration', `${formatNumber(counters.current.registered)} registered`)
-          },
-          vals: {
-            guests: () => {
-              counters.current.confirmed += 1
-              return `${counters.current.confirmed} confirmed`
-            },
-          },
+          from: 'guests',
+          to: ['budget'],
+          msg: 'Headcount +20 · catering line updated',
+          pre: () => setVal('guests', '220 guests'),
+          vals: { budget: '$52,400 forecast' },
         },
-        { from: 'guests', to: ['budget'], msg: 'Headcount changed · catering forecast updated', vals: { budget: '$186.6k forecast' } },
         {
-          from: 'vendors',
-          to: ['tasks', 'timeline'],
-          msg: 'AV contract signed · load-in scheduled',
-          vals: { tasks: '129 of 164 done', timeline: 'Load-in 7:30 AM' },
+          from: 'suppliers',
+          to: ['expenses', 'tasks'],
+          msg: 'Catering quote accepted · $17,000 allocated',
+          vals: { expenses: '$48,200 committed', tasks: 'Deposit due 14 Mar' },
         },
-        { from: 'collab', to: ['timeline'], msg: 'Keynote moved · run of show updated', vals: { timeline: 'Keynote 9:30 AM' } },
-        { from: 'budget', to: ['analytics'], msg: 'Spend synced · report refreshed', vals: { analytics: '62% of budget used' } },
+        {
+          from: 'proposals',
+          to: ['approvals'],
+          msg: 'Proposal sent · approval requested',
+          vals: { approvals: '3 pending' },
+        },
+        {
+          from: 'expenses',
+          to: ['budget', 'reports'],
+          msg: 'Overspend alert · AV is $1,200 over',
+          vals: { budget: '$1,200 over on AV', reports: 'Report updated' },
+        },
       ]
 
       const stepTl = (s: Step) => {
@@ -159,8 +159,8 @@ export function ConnectedHub({ className, act = 'Connected by design' }: { class
         <SectionHead
           center
           eyebrow={act}
-          title="One change. Every tool updates."
-          lede="A new RSVP updates your guest list, catering forecast and reports at the same moment. Your data moves through the platform, so your team doesn't have to move it by hand."
+          title="Change one number. Everything updates."
+          lede="A guest-count change updates your catering budget, forecast and reports at once. An accepted quote updates your spend. Your team never re-types a number."
         />
 
         <div
@@ -207,7 +207,7 @@ export function ConnectedHub({ className, act = 'Connected by design' }: { class
                 <i className="size-[7px] rounded-full bg-[#3FD39A] shadow-[0_0_0_3px_rgba(63,211,154,.2)]" />
                 Live sync
               </span>
-              <strong className="font-display text-base">Partner Summit 2027</strong>
+              <strong className="font-display text-base">Sydney Conference 2027</strong>
               <span data-hub-msg aria-live="off" className="block min-h-[2.6em] text-[13px] leading-[1.3] text-rose">
                 {message}
               </span>

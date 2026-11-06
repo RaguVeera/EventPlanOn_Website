@@ -1,23 +1,23 @@
 import { useRef, useState, type ComponentType } from 'react'
 import { cn } from '@/lib/cn'
-import { STAGES } from '@/data/content'
+import { STEPS } from '@/data/content'
 import { gsap, prefersReducedMotion, useGSAP } from '@/lib/gsap'
 import { AppFrame, AppMain } from '@/components/ui/AppFrame'
 import { Eyebrow } from '@/components/ui/layout'
 import { MODULE_VIEWS } from '@/components/product/ModuleViews'
-import { SHOWCASE } from '@/components/product/ShowcaseViews'
+import { BuiltBudgetView, PromptView } from '@/components/product/BudgetViews'
 
-/** Which product screen illustrates each stage of the lifecycle. */
+/** Which product screen illustrates each step of the flow. */
 const SCREENS: { url: string; View: ComponentType }[] = [
-  { url: 'events', View: MODULE_VIEWS.planning },
-  { url: 'tasks', View: MODULE_VIEWS.tasks },
-  { url: 'forms/registration', View: MODULE_VIEWS.registration },
-  { url: 'agenda/day-1', View: SHOWCASE[2].View },
-  { url: 'reports', View: MODULE_VIEWS.analytics },
+  { url: 'events/new', View: PromptView },
+  { url: 'events/sydney-conference/budget', View: BuiltBudgetView },
+  { url: 'events/sydney-conference/suppliers', View: MODULE_VIEWS.vendors },
+  { url: 'events/sydney-conference/proposals', View: MODULE_VIEWS.proposals },
+  { url: 'events/sydney-conference/expenses', View: MODULE_VIEWS.budget },
 ]
 
 /**
- * Act 2: the journey. On desktop the page pins and the five lifecycle stages
+ * How it works: prompt → budget → suppliers → proposals → expenses. On desktop the page pins and the five steps
  * slide past horizontally as you scroll; on phones they simply stack.
  */
 export function JourneyScene() {
@@ -45,7 +45,7 @@ export function JourneyScene() {
             pin: true,
             scrub: 0.6,
             invalidateOnRefresh: true,
-            onUpdate: (self) => setActive(Math.round(self.progress * (STAGES.length - 1))),
+            onUpdate: (self) => setActive(Math.round(self.progress * (STEPS.length - 1))),
           },
         })
         gsap.to('[data-journey-bar]', {
@@ -72,13 +72,13 @@ export function JourneyScene() {
       <div className="px-4 pt-16 md:px-8 pinned:absolute pinned:inset-x-0 pinned:top-0 pinned:z-10 pinned:pt-24">
         <div className="mx-auto flex max-w-[1200px] items-end justify-between gap-6">
           <div>
-            <Eyebrow>Act 02 · The journey</Eyebrow>
-            <h2 className="mt-3 font-serif text-[clamp(30px,4vw,56px)] leading-none font-medium tracking-[-0.03em]">
-              From first idea to <em className="text-coral">final report.</em>
+            <Eyebrow>How it works</Eyebrow>
+            <h2 className="mt-3 font-serif text-[clamp(30px,3.2vw,45px)] leading-none font-medium tracking-[-0.03em]">
+              From a prompt to <em className="text-coral">every expense.</em>
             </h2>
           </div>
-          <ol className="m-0 hidden list-none gap-2 p-0 pinned:flex" aria-label="Lifecycle progress">
-            {STAGES.map((s, i) => (
+          <ol className="m-0 hidden list-none gap-2 p-0 pinned:flex" aria-label="How it works progress">
+            {STEPS.map((s, i) => (
               <li
                 key={s.title}
                 className={cn(
@@ -95,7 +95,7 @@ export function JourneyScene() {
       </div>
 
       <div ref={track} className="flex flex-col pinned:h-full pinned:w-[500vw] pinned:flex-row">
-        {STAGES.map((s, i) => {
+        {STEPS.map((s, i) => {
           const { View, url } = SCREENS[i]
           const on = i === active
           return (
@@ -105,7 +105,7 @@ export function JourneyScene() {
             >
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute -top-2 right-3 font-serif text-[clamp(140px,26vw,380px)] leading-none font-medium text-coral/10 select-none md:right-10 pinned:top-24"
+                className="pointer-events-none absolute -top-2 right-3 font-serif text-[clamp(112px,20.8vw,304px)] leading-none font-medium text-coral/10 select-none md:right-10 pinned:top-24"
               >
                 0{i + 1}
               </span>
@@ -116,9 +116,9 @@ export function JourneyScene() {
                 )}
               >
                 <Eyebrow>
-                  Stage {i + 1} of {STAGES.length}
+                  Step {i + 1} of {STEPS.length}
                 </Eyebrow>
-                <h3 className="font-serif text-[clamp(36px,5vw,68px)] leading-[.98] font-medium tracking-[-0.03em]">{s.title}</h3>
+                <h3 className="font-serif text-[clamp(30px,4vw,54px)] leading-[.98] font-medium tracking-[-0.03em]">{s.title}</h3>
                 <p className="text-lg text-muted">{s.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {s.tools.map((t) => (

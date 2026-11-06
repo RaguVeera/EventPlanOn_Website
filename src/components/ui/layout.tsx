@@ -52,7 +52,7 @@ export function SectionHead({ eyebrow, title, lede, center, className }: Section
       className={cn('mb-14 grid max-w-[760px] gap-4', center && 'mx-auto justify-items-center text-center', className)}
     >
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="font-serif text-[clamp(34px,5vw,68px)] leading-[1] font-medium tracking-[-0.03em]">{title}</h2>
+      <h2 className="font-serif text-[clamp(30px,4vw,54px)] leading-[1] font-medium tracking-[-0.03em]">{title}</h2>
       {lede && <p className="max-w-[60ch] text-lg text-muted">{lede}</p>}
     </div>
   )

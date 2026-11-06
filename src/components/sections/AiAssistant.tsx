@@ -8,7 +8,7 @@ import { Icon } from '@/components/ui/Icon'
 const footButton =
   'rounded-full border border-navy-line px-3 py-[7px] text-[12.5px] font-semibold text-[#D7DCE8] first:border-coral first:bg-coral first:text-white'
 
-export function AiAssistant({ act = 'AI-powered event management', compact }: { act?: string; compact?: boolean }) {
+export function AiAssistant({ act = 'AI event budgeting', compact }: { act?: string; compact?: boolean }) {
   const [active, setActive] = useState(0)
   const root = useRef<HTMLElement>(null)
   const promptRef = useRef<HTMLSpanElement>(null)
@@ -90,19 +90,19 @@ export function AiAssistant({ act = 'AI-powered event management', compact }: { 
           <Eyebrow className="text-coral-light">{act}</Eyebrow>
           {!compact && (
             <>
-              <h2 className="mt-3.5 font-serif text-[clamp(34px,5vw,68px)] leading-[1] font-medium tracking-[-0.03em]">
-                Your planning co-pilot <em className="text-coral-light">for every event.</em>
+              <h2 className="mt-3.5 font-serif text-[clamp(30px,4vw,54px)] leading-[1] font-medium tracking-[-0.03em]">
+                Describe it. <em className="text-coral-light">Get your budget.</em>
               </h2>
               <p className="mt-4 max-w-[60ch] text-lg text-navy-text">
-                Event Plan On learns from your event data to suggest next steps, catch risks early and automate the busywork.
-                You stay in control of every decision.
+                Type a prompt and get an instant category-by-category budget, then let the AI flag overspend, compare
+                supplier quotes and draft proposals. You approve every number.
               </p>
             </>
           )}
 
           <div
             role="tablist"
-            aria-label="AI capabilities"
+            aria-label="AI budgeting capabilities"
             onKeyDown={(e) => handleTabKeys(e, '[role="tab"]')}
             className={compact ? 'mt-6 grid gap-1' : 'mt-9 grid gap-1'}
           >
@@ -136,7 +136,7 @@ export function AiAssistant({ act = 'AI-powered event management', compact }: { 
             <span className="grid size-7 place-items-center rounded-lg bg-linear-to-br from-coral to-[#F59A6B] text-white">
               <Icon name="spark" size={15} />
             </span>
-            Event Plan On Assistant · Partner Summit 2027
+            Event Plan On AI · Sydney Conference 2027
           </div>
           <div className="rounded-xl border border-navy-line bg-[#0F1422] p-3.5 text-sm text-[#E6E9F2]">
             <small className="mb-1 block text-[11.5px] font-semibold tracking-widest text-[#7D88A6] uppercase">You asked</small>

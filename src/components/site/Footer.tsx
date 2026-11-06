@@ -1,9 +1,11 @@
-import { PATHS, ROUTES, SUPPORT_EMAIL } from '@/config/routes'
+import { PATHS, ROUTES } from '@/config/routes'
+import { BUSINESS, CITIES, TRIAL_CTA } from '@/config/business'
 import { MODULES, SOLUTIONS } from '@/data/content'
 import { Container } from '@/components/ui/layout'
 import logo from '@/assets/logo.png'
 import { SiteLink } from './SiteLink'
 import { NewsletterForm } from './NewsletterForm'
+import { ContactList } from './ContactDetails'
 
 const socials = [
   {
@@ -29,23 +31,23 @@ const socials = [
 ]
 
 const linkClass = 'hover:text-white'
+const colTitle = 'mb-3.5 text-[13px] tracking-[.12em] text-white uppercase'
+const list = 'm-0 grid list-none gap-2.5 p-0 text-[14.5px]'
 
 export function Footer() {
   return (
     <footer data-tone="dark" className="overflow-hidden bg-navy pt-20 text-navy-text">
       <Container>
-        <div className="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-x-6 gap-y-10 sm:gap-x-10 lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))_minmax(0,1.3fr)] lg:gap-x-8 xl:gap-x-10">
+        <div className="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-x-6 gap-y-10 sm:gap-x-10 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,.9fr))_minmax(0,1.4fr)] lg:gap-x-8 xl:gap-x-10">
           <div className="col-span-2 lg:col-span-1">
-            <p className="max-w-[26ch] font-serif text-[28px] leading-[1.1] text-white">
-              Plan every event like it's the only one.
-            </p>
+            <p className="max-w-[26ch] font-serif text-[24px] leading-[1.2] text-white">Budget every event with confidence.</p>
             <NewsletterForm />
             <div className="mt-5 flex gap-2.5">
               {socials.map((s) => (
                 <a
                   key={s.label}
                   href="#"
-                  aria-label={s.label}
+                  aria-label={`${s.label} (placeholder link)`}
                   className="grid size-[38px] place-items-center rounded-[10px] border border-navy-line text-[#D7DCE8] hover:bg-navy-2 hover:text-white"
                 >
                   <svg width={s.size} height={s.size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -57,9 +59,9 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-3.5 text-[13px] tracking-[.12em] text-white uppercase">Platform</h4>
-            <ul className="m-0 grid list-none gap-2.5 p-0 text-[14.5px]">
-              {MODULES.slice(0, 6).map((m) => (
+            <h4 className={colTitle}>Platform</h4>
+            <ul className={list}>
+              {MODULES.slice(0, 5).map((m) => (
                 <li key={m.id}>
                   <SiteLink className={linkClass} to={`${PATHS.platform}/${m.id}`}>
                     {m.label}
@@ -75,40 +77,55 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-3.5 text-[13px] tracking-[.12em] text-white uppercase">Solutions</h4>
-            <ul className="m-0 grid list-none gap-2.5 p-0 text-[14.5px]">
-              {SOLUTIONS.map((s) => (
-                <li key={s.id}>
-                  <SiteLink className={linkClass} to={`${PATHS.solutions}/${s.id}`}>
-                    {s.title}
+            <h4 className={colTitle}>Solutions</h4>
+            <ul className={list}>
+              {SOLUTIONS.map((x) => (
+                <li key={x.id}>
+                  <SiteLink className={linkClass} to={`${PATHS.solutions}/${x.id}`}>
+                    {x.title}
                   </SiteLink>
                 </li>
               ))}
+              <li>
+                <SiteLink className={linkClass} to={PATHS.useCases}>
+                  Use cases
+                </SiteLink>
+              </li>
+              <li>
+                <SiteLink className={linkClass} to={PATHS.pricing}>
+                  Pricing
+                </SiteLink>
+              </li>
             </ul>
           </div>
 
           <div className="max-[28rem]:col-span-2">
-            <h4 className="mb-3.5 text-[13px] tracking-[.12em] text-white uppercase">Explore</h4>
-            <ul className="m-0 grid list-none gap-2.5 p-0 text-[14.5px]">
-              <li><SiteLink className={linkClass} to={PATHS.ai}>AI assistant</SiteLink></li>
+            <h4 className={colTitle}>Company</h4>
+            <ul className={list}>
+              <li><SiteLink className={linkClass} to={PATHS.about}>About us</SiteLink></li>
+              <li><SiteLink className={linkClass} to={PATHS.blog}>Blog</SiteLink></li>
               <li><SiteLink className={linkClass} to={PATHS.resources}>Resources</SiteLink></li>
-              <li><SiteLink className={linkClass} to={PATHS.pricing}>Pricing</SiteLink></li>
+              <li><SiteLink className={linkClass} to={PATHS.contact}>Contact</SiteLink></li>
               <li><SiteLink className={linkClass} to={PATHS.demo}>Book a demo</SiteLink></li>
+              <li><a className={linkClass} href={ROUTES.signup} target="_blank" rel="noopener">{TRIAL_CTA}</a></li>
+              <li><a className={linkClass} href={ROUTES.login} target="_blank" rel="noopener">Log in</a></li>
             </ul>
           </div>
 
-          <div className="max-[28rem]:col-span-2">
-            <h4 className="mb-3.5 text-[13px] tracking-[.12em] text-white uppercase">Get started</h4>
-            <ul className="m-0 grid list-none gap-2.5 p-0 text-[14.5px]">
-              <li><a className={linkClass} href={ROUTES.signup} target="_blank" rel="noopener">Start free trial</a></li>
-              <li><a className={linkClass} href={ROUTES.login} target="_blank" rel="noopener">Log in</a></li>
-              <li><a className={`${linkClass} [overflow-wrap:anywhere]`} href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></li>
-            </ul>
+          <div className="col-span-2 lg:col-span-1">
+            <h4 className={colTitle}>Contact</h4>
+            <ContactList dark className="gap-4 text-[14.5px]" />
           </div>
         </div>
 
-        <div className="mt-14 flex flex-wrap justify-between gap-4 border-t border-navy-line pt-6 text-[13.5px]">
-          <span>© {new Date().getFullYear()} Event Plan On. All rights reserved.</span>
+        <p className="mt-12 text-[14px]">
+          Event management software for teams in {CITIES.slice(0, -1).join(', ')} and {CITIES[CITIES.length - 1]}.
+        </p>
+
+        <div className="mt-6 flex flex-wrap justify-between gap-4 border-t border-navy-line pt-6 text-[13.5px]">
+          <span>
+            © {new Date().getFullYear()} {BUSINESS.legalName} (ABN {BUSINESS.abn}), trading as {BUSINESS.brand}. All rights reserved.
+          </span>
           <nav aria-label="Legal" className="flex flex-wrap gap-5">
             <a className={linkClass} href="#">Privacy Policy</a>
             <a className={linkClass} href="#">Terms of Service</a>
@@ -118,8 +135,12 @@ export function Footer() {
       </Container>
 
       {/* Oversized wordmark */}
-      <div className="mt-10 px-4 pb-8 md:px-8 md:pb-12" aria-hidden="true">
-        <img src={logo} alt="" className="mx-auto block w-full max-w-[1400px]" />
+      <div className="mt-10 px-4 pb-8 md:px-8 md:pb-12">
+        <img
+          src={logo}
+          alt="Event Plan On: AI event budgeting software for Australian event teams"
+          className="mx-auto block w-full max-w-[1400px]"
+        />
       </div>
     </footer>
   )

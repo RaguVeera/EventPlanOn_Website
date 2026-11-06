@@ -2,7 +2,9 @@ import { useRef } from 'react'
 import { useParams } from 'react-router'
 import { PATHS } from '@/config/routes'
 import { MODULES, MODULE_RELATED, type PlatformModule } from '@/data/content'
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { definitionFor } from '@/data/seo'
+import { TRIAL_CTA } from '@/config/business'
+import { TrialNote } from '@/components/site/TrialNote'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { gsap, prefersReducedMotion, useGSAP } from '@/lib/gsap'
 import { Button } from '@/components/ui/Button'
@@ -17,7 +19,6 @@ import { ClosingScene } from '@/components/story/ClosingScene'
 import NotFound from './NotFound'
 
 function ModuleView({ module, index }: { module: PlatformModule; index: number }) {
-  usePageTitle(module.label)
   const root = useRef<HTMLDivElement>(null)
   useScrollReveal(root, '[data-reveal]')
 
@@ -40,15 +41,16 @@ function ModuleView({ module, index }: { module: PlatformModule; index: number }
 
   return (
     <div ref={root}>
-      <PageHero eyebrow={`Platform · ${module.label}`} lines={[module.title]} lede={module.text}>
+      <PageHero eyebrow={`Platform · ${module.label}`} lines={[module.title]} lede={definitionFor(`${PATHS.platform}/${module.id}`)}>
         <div className="mt-9 flex flex-wrap gap-3">
           <Button route="signup" size="lg" arrow>
-            Try {module.label.toLowerCase()} free
+            {TRIAL_CTA}
           </Button>
           <Button to={PATHS.demo} variant="ghost" size="lg">
             See it in a demo
           </Button>
         </div>
+        <TrialNote className="mt-5" />
       </PageHero>
 
       <Section className="bg-ivory pt-0 md:pt-0">
@@ -65,7 +67,7 @@ function ModuleView({ module, index }: { module: PlatformModule; index: number }
 
       <Section className="bg-paper">
         <Container>
-          <Eyebrow>What you can do</Eyebrow>
+          <Eyebrow>What you get</Eyebrow>
           <ol className="m-0 mt-8 grid list-none border-t border-line p-0">
             {module.points.map((p, i) => (
               <li
@@ -73,10 +75,10 @@ function ModuleView({ module, index }: { module: PlatformModule; index: number }
                 data-reveal
                 className="group grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-6 border-b border-line py-8 transition-colors hover:bg-ivory md:gap-12 md:px-4"
               >
-                <span className="font-serif text-[clamp(40px,6vw,88px)] leading-none text-coral/30 transition-colors group-hover:text-coral">
+                <span className="font-serif text-[clamp(32px,4.8vw,70px)] leading-none text-coral/30 transition-colors group-hover:text-coral">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p className="font-serif text-[clamp(24px,3.4vw,48px)] leading-[1.1] font-medium tracking-[-0.02em]">{p}</p>
+                <p className="font-serif text-[clamp(22px,2.7vw,38px)] leading-[1.15] font-medium tracking-[-0.02em]">{p}</p>
               </li>
             ))}
           </ol>
@@ -86,8 +88,8 @@ function ModuleView({ module, index }: { module: PlatformModule; index: number }
       <Section className="bg-ivory">
         <Container>
           <Eyebrow>Pairs well with</Eyebrow>
-          <h2 className="mt-3 mb-10 max-w-[18ch] font-serif text-[clamp(32px,4.6vw,64px)] leading-none font-medium tracking-[-0.03em]">
-            Change one thing. <em className="text-coral">Everything updates.</em>
+          <h2 className="mt-3 mb-10 max-w-[18ch] font-serif text-[clamp(30px,3.7vw,51px)] leading-none font-medium tracking-[-0.03em]">
+            Change one number. <em className="text-coral">Everything updates.</em>
           </h2>
           <div className="grid gap-5 md:grid-cols-3">
             {related.map((m) => (

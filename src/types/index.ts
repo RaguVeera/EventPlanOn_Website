@@ -23,31 +23,31 @@ export type IconName =
   | 'play'
   | 'help'
   | 'plug'
+  | 'phone'
+  | 'mail'
+  | 'pin'
+  | 'clock'
+  | 'send'
 
 export type RouteKey = 'signup' | 'login' | 'demo' | 'pricing'
 
 export type ModuleId =
-  | 'planning'
   | 'budget'
+  | 'vendors'
+  | 'proposals'
+  | 'analytics'
+  | 'planning'
   | 'tasks'
   | 'timeline'
-  | 'guests'
-  | 'vendors'
-  | 'registration'
   | 'collab'
-  | 'analytics'
+  | 'guests'
+  | 'registration'
 
 export type SolutionId = 'corporate' | 'planners' | 'agencies' | 'conferences' | 'exhibitions'
 
-export type HubKey =
-  | 'budget'
-  | 'tasks'
-  | 'timeline'
-  | 'vendors'
-  | 'guests'
-  | 'registration'
-  | 'collab'
-  | 'analytics'
+export type UseCaseId = 'corporate' | 'agencies' | 'community'
+
+export type HubKey = 'budget' | 'suppliers' | 'proposals' | 'expenses' | 'guests' | 'tasks' | 'approvals' | 'reports'
 
 export type Tone = 'default' | 'ok' | 'warn' | 'coral' | 'info'
 

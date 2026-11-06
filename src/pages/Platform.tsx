@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { PATHS } from '@/config/routes'
 import { MODULES } from '@/data/content'
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { definitionFor } from '@/data/seo'
 import { ScrollTrigger, gsap, prefersReducedMotion, useGSAP } from '@/lib/gsap'
 import { scrollToElement } from '@/lib/smooth'
 import { AppFrame, AppMain } from '@/components/ui/AppFrame'
@@ -15,7 +15,6 @@ import { ClosingScene } from '@/components/story/ClosingScene'
 
 /** The platform as a guided tour: a sticky index on the left follows you through each tool. */
 export default function Platform() {
-  usePageTitle('Platform')
   const root = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
 
@@ -56,9 +55,9 @@ export default function Platform() {
     <div ref={root}>
       <PageHero
         eyebrow="The platform"
-        lines={['Twelve-plus tools.']}
-        accent="One shared brain."
-        lede="Every tool shares the same data, so a change in one place shows up everywhere it matters. Take the tour."
+        lines={['One platform for']}
+        accent="every event dollar."
+        lede={definitionFor(PATHS.platform)}
       />
 
       <Container className="grid gap-12 pb-12 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
@@ -99,7 +98,7 @@ export default function Platform() {
                 <div data-chapter-text className="grid gap-5">
                   <span className="font-serif text-7xl leading-none text-coral/25">{String(i + 1).padStart(2, '0')}</span>
                   <MegaIcon name={m.icon} size={44} iconSize={20} rounded="rounded-xl" />
-                  <h2 className="font-serif text-[clamp(30px,3.6vw,52px)] leading-[1.02] font-medium tracking-[-0.03em]">{m.title}</h2>
+                  <h2 className="font-serif text-[clamp(30px,2.9vw,42px)] leading-[1.02] font-medium tracking-[-0.03em]">{m.title}</h2>
                   <p className="text-[17px] text-muted">{m.text}</p>
                   <CheckList items={m.points} />
                   <PageLink to={`${PATHS.platform}/${m.id}`}>Explore {m.label.toLowerCase()}</PageLink>

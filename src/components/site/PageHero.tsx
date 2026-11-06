@@ -6,7 +6,7 @@ import { Container, Eyebrow } from '@/components/ui/layout'
 /** One headline line, masked so its text can slide up into view (animated via `[data-w]`). */
 export function MaskedLine({ children, accent, className }: { children: ReactNode; accent?: boolean; className?: string }) {
   return (
-    <span className={cn('block overflow-hidden pb-[.12em] -mb-[.12em]', className)}>
+    <span className={cn('block overflow-hidden pb-[.2em] -mb-[.2em]', className)}>
       <span data-w className={cn('inline-block', accent && 'text-coral italic')}>
         {children}
       </span>
@@ -60,7 +60,7 @@ export function PageHero({ eyebrow, lines, accent, lede, tone = 'light', childre
         <div data-in="eyebrow">
           <Eyebrow className={dark ? 'text-coral-light' : undefined}>{eyebrow}</Eyebrow>
         </div>
-        <h1 className="mt-5 font-serif text-[clamp(46px,8vw,120px)] leading-[.95] font-medium tracking-[-0.035em]">
+        <h1 className="mt-5 font-serif text-[clamp(37px,6.4vw,96px)] leading-[1.04] font-medium tracking-[-0.03em]">
           {lines.map((l) => (
             <MaskedLine key={l}>{l}</MaskedLine>
           ))}

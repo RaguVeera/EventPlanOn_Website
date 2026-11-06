@@ -1,4 +1,11 @@
-import type { HubKey, IconName, ModuleId, SolutionId } from '@/types'
+import type { HubKey, IconName, ModuleId, SolutionId, UseCaseId } from '@/types'
+// Relative (not '@/') so the build-time prerender script can import this file under plain Node.
+import { BUSINESS, TRIAL_DAYS } from '../config/business'
+
+/*
+ * All marketing copy lives here. Australian English throughout; prices are AUD.
+ * Business details, plans, testimonials and the team are SAMPLE data: replace them before launch.
+ */
 
 /* ---------- Platform modules ---------- */
 export interface PlatformModule {
@@ -12,27 +19,63 @@ export interface PlatformModule {
 
 export const MODULES: PlatformModule[] = [
   {
-    id: 'planning',
-    label: 'Event Planning',
-    icon: 'plan',
-    title: 'Plan every event from one workspace',
-    text: 'Spin up an event from a template and keep its details, files, checklists and stakeholders together.',
+    id: 'budget',
+    label: 'Budgets & expenses',
+    icon: 'budget',
+    title: 'See where every dollar goes',
+    text: 'Track planned vs actual event costs in real time, and get an alert before a budget line runs over.',
     points: [
-      'Reusable templates for conferences, galas, offsites and weddings',
-      'Mood boards, files and notes attached to the event',
-      'Portfolio view of every event your team is running',
+      'Planned vs actual spend by category, updated as you log costs',
+      'Overspend alerts on every budget line',
+      'Totals shown ex-GST and inc-GST for your finance team',
     ],
   },
   {
-    id: 'budget',
-    label: 'Budgets',
-    icon: 'budget',
-    title: 'Budgets that update themselves',
-    text: 'Track estimated versus actual spend by category, with payments and deposits tied to each vendor.',
+    id: 'vendors',
+    label: 'Supplier allocation',
+    icon: 'vendor',
+    title: 'Compare quotes. Allocate suppliers.',
+    text: 'Assign venue, catering, AV, décor and transport suppliers to budget lines and compare quotes side by side.',
     points: [
-      'Estimate vs. actual by category, in real time',
-      'Deposit and payment schedules per vendor',
-      'Alerts when a line item runs over',
+      'Quotes from different suppliers compared side by side',
+      'Every supplier linked to the budget line it affects',
+      'Deposits and payment dates tracked in one place',
+    ],
+  },
+  {
+    id: 'proposals',
+    label: 'Proposals',
+    icon: 'form',
+    title: 'Send professional proposals in minutes',
+    text: 'Turn a finished budget into a polished proposal and send it to clients or suppliers without leaving the platform.',
+    points: [
+      'Generate a proposal straight from your budget',
+      'Send to clients or suppliers by email',
+      'See which proposals are sent, approved or waiting',
+    ],
+  },
+  {
+    id: 'analytics',
+    label: 'Reports',
+    icon: 'chart',
+    title: 'Finance-ready reports on demand',
+    text: 'Share budget-vs-actual reports that finance teams, clients and committees can read at a glance.',
+    points: [
+      'Budget vs actual by event and category',
+      'Compare costs across your events to improve the next budget',
+      'Export reports for finance, clients or grant acquittals',
+    ],
+  },
+  {
+    id: 'planning',
+    label: 'Event planning',
+    icon: 'plan',
+    title: 'Every event in one place',
+    text: 'Start from a template and see all your events, budgets and deadlines in one portfolio.',
+    points: [
+      'Templates for conferences, offsites, weddings and fundraisers',
+      'Files and notes kept with the event they belong to',
+      'One view of every event your team is running',
     ],
   },
   {
@@ -40,143 +83,112 @@ export const MODULES: PlatformModule[] = [
     label: 'Tasks',
     icon: 'task',
     title: 'Tasks with owners and deadlines',
-    text: 'Break the event into tasks, assign owners, set due dates and watch progress roll up automatically.',
-    points: ['Assign to staff, clients or vendors', 'Dependencies and due-date reminders', 'Board, list and calendar views'],
+    text: 'Break the event into tasks, assign owners and watch progress roll up, so nothing stalls a payment or a booking.',
+    points: ['Assign to staff, volunteers or suppliers', 'Due-date reminders', 'Board, list and calendar views'],
   },
   {
     id: 'timeline',
     label: 'Timelines',
     icon: 'time',
     title: 'Timelines and day-of agendas',
-    text: 'Map milestones across months, then switch to a minute-by-minute run of show for event day.',
+    text: 'Map milestones from first booking to event day, then share a minute-by-minute run sheet with your crew.',
     points: [
       'Milestone timeline across the planning cycle',
-      'Day-of itinerary shared with the whole crew',
+      'Day-of run sheet shared with the whole crew',
       'Last-minute changes reach everyone instantly',
+    ],
+  },
+  {
+    id: 'collab',
+    label: 'Approvals & collaboration',
+    icon: 'team',
+    title: 'Get budgets approved faster',
+    text: 'Invite managers, clients and suppliers, and control who sees which numbers.',
+    points: [
+      'Role-based access for finance, clients and suppliers',
+      'Comments and approvals on the budget line they relate to',
+      'Shared files everyone can find',
     ],
   },
   {
     id: 'guests',
     label: 'Guests',
     icon: 'guest',
-    title: 'Guest lists that stay accurate',
-    text: 'Manage attendees, RSVPs, dietary needs and check-in from one list everyone can trust.',
+    title: 'Headcount that updates your costs',
+    text: 'Manage RSVPs, dietary needs and check-in from one list, and see catering costs move as numbers change.',
     points: [
-      'RSVP status updates from your forms automatically',
-      'Groups, tags, seating and dietary notes',
+      'RSVP status updates automatically',
+      'Groups, seating and dietary notes',
       'Fast check-in on event day',
-    ],
-  },
-  {
-    id: 'vendors',
-    label: 'Vendors',
-    icon: 'vendor',
-    title: 'Every vendor, contract and payment',
-    text: 'Keep supplier contacts, quotes, contracts and payment dates in one directory linked to your budget.',
-    points: [
-      'Vendor directory reusable across events',
-      'Quotes and contracts stored with each vendor',
-      'Payment due dates feed your budget and tasks',
     ],
   },
   {
     id: 'registration',
     label: 'Registration',
     icon: 'form',
-    title: 'Forms and registration, no code',
-    text: 'Build branded RSVP, registration and feedback forms that feed straight into your guest list.',
+    title: 'Registration forms, no code',
+    text: 'Publish branded RSVP and registration forms that feed straight into your guest list.',
     points: [
       'Templates for RSVP, registration and feedback',
-      'Responses sync to attendees in real time',
-      'Shareable links and embeds for your site',
-    ],
-  },
-  {
-    id: 'collab',
-    label: 'Collaboration',
-    icon: 'team',
-    title: 'Bring your event team together',
-    text: 'Staff, clients, contractors and vendors work from the same plan, with communication kept next to the work.',
-    points: [
-      'Role-based access for clients and vendors',
-      'Comments and mentions on any task or item',
-      'Shared files everyone can find',
-    ],
-  },
-  {
-    id: 'analytics',
-    label: 'Analytics',
-    icon: 'chart',
-    title: 'Know what worked',
-    text: 'Report on registrations, attendance, spend and feedback, and compare events side by side.',
-    points: [
-      'Registration and attendance trends',
-      'Spend by category against budget',
-      'Feedback scores from post-event surveys',
+      'Responses sync to your guest list in real time',
+      'Shareable links and embeds for your website',
     ],
   },
 ]
 
-/** Modules that work most closely with each other: drives the "pairs well with" blocks. */
+/** Modules that work most closely together: drives the "pairs well with" blocks. */
 export const MODULE_RELATED: Record<ModuleId, ModuleId[]> = {
-  planning: ['budget', 'tasks', 'vendors'],
-  budget: ['vendors', 'tasks', 'analytics'],
-  tasks: ['timeline', 'collab', 'planning'],
+  budget: ['vendors', 'proposals', 'analytics'],
+  vendors: ['budget', 'proposals', 'tasks'],
+  proposals: ['budget', 'vendors', 'collab'],
+  analytics: ['budget', 'planning', 'guests'],
+  planning: ['budget', 'tasks', 'timeline'],
+  tasks: ['timeline', 'collab', 'vendors'],
   timeline: ['tasks', 'collab', 'guests'],
-  guests: ['registration', 'analytics', 'collab'],
-  vendors: ['budget', 'tasks', 'collab'],
+  collab: ['proposals', 'budget', 'tasks'],
+  guests: ['registration', 'budget', 'timeline'],
   registration: ['guests', 'analytics', 'collab'],
-  collab: ['tasks', 'timeline', 'vendors'],
-  analytics: ['budget', 'guests', 'registration'],
 }
 
-/** The tools each audience leans on most. */
-export const SOLUTION_MODULES: Record<SolutionId, ModuleId[]> = {
-  corporate: ['planning', 'budget', 'analytics', 'collab'],
-  planners: ['tasks', 'vendors', 'timeline', 'planning'],
-  agencies: ['collab', 'analytics', 'tasks', 'budget'],
-  conferences: ['registration', 'timeline', 'guests', 'analytics'],
-  exhibitions: ['vendors', 'guests', 'timeline', 'registration'],
-}
-
-/* ---------- Lifecycle ---------- */
-export interface LifecycleStage {
+/* ---------- How it works ---------- */
+export interface HowStep {
   title: string
-  summary: string
+  short: string
   description: string
   tools: string[]
 }
 
-export const STAGES: LifecycleStage[] = [
+/** The five-step flow shown on the home page and the use cases page. */
+export const STEPS: HowStep[] = [
   {
-    title: 'Discover & Plan',
-    summary: 'Set goals, budget and timeline',
-    description: 'Start from a template, set your goals and budget, and build the timeline your whole team works to.',
-    tools: ['Event templates', 'Budget calculator', 'Timeline', 'Mood boards'],
+    title: 'Describe your event in a prompt',
+    short: 'Describe your event',
+    description: 'Type what you are planning, where, for how many guests and your total budget. Plain English is fine.',
+    tools: ['Event type', 'Guest count', 'Location', 'Total budget'],
   },
   {
-    title: 'Organize',
-    summary: 'Tasks, vendors and logistics',
-    description: 'Assign tasks, book vendors and track contracts and payments while the budget updates itself.',
-    tools: ['Tasks & to-dos', 'Vendor directory', 'Contracts', 'Collaboration'],
+    title: 'AI builds your budget',
+    short: 'AI builds your budget',
+    description: 'Get an instant category-by-category budget with contingency built in. Edit any line before you save.',
+    tools: ['Category budget', 'Contingency', 'GST totals', 'Edit any line'],
   },
   {
-    title: 'Promote & Register',
-    summary: 'Invite, register, confirm',
-    description: 'Publish branded registration and RSVP forms, send invitations and watch your guest list fill in real time.',
-    tools: ['Registration forms', 'RSVP tracking', 'Attendee lists', 'Communication tools'],
+    title: 'Allocate suppliers',
+    short: 'Allocate suppliers',
+    description: 'Assign venue, catering, AV, décor and transport suppliers to budget lines and compare quotes side by side.',
+    tools: ['Venue', 'Catering', 'AV', 'Quote comparison'],
   },
   {
-    title: 'Execute',
-    summary: 'Run event day smoothly',
-    description: 'Share a minute-by-minute run of show, check guests in and push last-minute changes to the whole crew.',
-    tools: ['Day-of itinerary', 'Check-in', 'Live updates', 'Mobile access'],
+    title: 'Send proposals',
+    short: 'Send proposals',
+    description: 'Generate a professional proposal from your budget and send it to a client or supplier in a few clicks.',
+    tools: ['Proposal builder', 'Send by email', 'Approval status', 'Branding'],
   },
   {
-    title: 'Measure',
-    summary: 'Report, learn, repeat',
-    description: 'Close out the budget, collect feedback and compare results with past events to plan the next one better.',
-    tools: ['Feedback surveys', 'Spend reports', 'Attendance analytics', 'Event comparisons'],
+    title: 'Track every expense',
+    short: 'Track every expense',
+    description: 'Log costs as they happen. Planned vs actual updates instantly, and you are alerted before you overspend.',
+    tools: ['Planned vs actual', 'Overspend alerts', 'Receipts', 'Finance reports'],
   },
 ]
 
@@ -186,7 +198,6 @@ export interface AiCapability {
   description: string
   icon: IconName
   prompt: string
-  /** [label, html-free text segments] — `bold` marks the emphasised parts. */
   replies: { label: string; parts: { text: string; bold?: boolean }[] }[]
 }
 
@@ -195,147 +206,173 @@ const b = (text: string) => ({ text, bold: true })
 
 export const AI_CAPABILITIES: AiCapability[] = [
   {
-    title: 'Smart task suggestions',
-    description: 'Generates a starter task list and timeline from your event type, date and size.',
-    icon: 'task',
-    prompt: 'Build a task plan for a 1,000-person partner summit on March 18.',
+    title: 'Prompt to budget',
+    description: 'Describe your event and get an instant, category-by-category budget.',
+    icon: 'spark',
+    prompt: 'Plan a 200-guest corporate conference in Sydney with a $50,000 budget.',
     replies: [
-      { label: 'Plan', parts: [b('164 tasks'), t(' across 9 workstreams, with owners suggested from past events')] },
-      { label: 'Timeline', parts: [t('Venue locked by '), b('Nov 30'), t(', speakers by '), b('Jan 15'), t(', registration opens '), b('Jan 20')] },
-      { label: 'Risk', parts: [t('Catering headcount is due 3 days before badge printing; consider swapping')] },
+      { label: 'Budget', parts: [b('9 categories'), t(' built in seconds, totalling '), b('$50,000')] },
+      { label: 'Biggest lines', parts: [t('Catering '), b('$17,000'), t(' · Venue '), b('$15,000'), t(' · AV '), b('$5,500')] },
+      { label: 'Safety net', parts: [t('Contingency of '), b('$2,000'), t(' held back for surprises')] },
     ],
   },
   {
-    title: 'Budget insights',
-    description: 'Spots overruns early and recommends where to rebalance spend.',
+    title: 'Overspend alerts',
+    description: 'Spot overruns early and see where to rebalance.',
     icon: 'budget',
     prompt: 'Are we on track with the budget?',
     replies: [
-      { label: 'Alert', parts: [t('Catering is '), b('8% over'), t(' estimate after the menu upgrade')] },
-      { label: 'Option', parts: [t('Décor is $6.6k under; moving '), b('$3.2k'), t(' covers the gap')] },
-      { label: 'Forecast', parts: [t('Projected final spend: '), b('$291k'), t(' of $300k')] },
+      { label: 'Alert', parts: [t('AV is '), b('$1,200 over'), t(' its planned $5,500 after the stage upgrade')] },
+      { label: 'Option', parts: [t('Décor is $900 under; moving '), b('$900'), t(' covers most of the gap')] },
+      { label: 'Forecast', parts: [t('Projected final spend: '), b('$49,300'), t(' of $50,000')] },
     ],
   },
   {
-    title: 'Automated workflows',
-    description: 'Sends reminders, updates RSVPs and nudges owners so nothing slips.',
-    icon: 'bolt',
-    prompt: 'What did automations handle this week?',
+    title: 'Quote comparison',
+    description: 'Compare supplier quotes side by side, with GST shown.',
+    icon: 'vendor',
+    prompt: 'Compare the three catering quotes for the conference.',
     replies: [
-      { label: 'Reminders', parts: [t('Sent '), b('23'), t(' deadline reminders to task owners')] },
-      { label: 'RSVPs', parts: [t('Synced '), b('342'), t(' registrations into the guest list')] },
-      { label: 'Vendors', parts: [t('Flagged SoundStage AV deposit due '), b('Feb 1')] },
+      { label: 'Lowest', parts: [t('Harbour Catering: '), b('$15,800'), t(' inc. GST')] },
+      { label: 'Best fit', parts: [t('Saffron Kitchens: '), b('$17,000'), t(', includes staffing and dietary options')] },
+      { label: 'Watch out', parts: [t('The lowest quote excludes staffing; allow about '), b('$1,400'), t(' more')] },
     ],
   },
   {
-    title: 'Drafts and summaries',
-    description: 'Drafts guest emails and summarizes feedback in seconds.',
-    icon: 'team',
-    prompt: 'Summarize post-event feedback from the gala.',
+    title: 'Proposal drafts',
+    description: 'Turn a finished budget into a client-ready proposal.',
+    icon: 'send',
+    prompt: 'Draft a proposal for the client from this budget.',
     replies: [
-      { label: 'Score', parts: [t('Average rating '), b('4.7/5'), t(' from 286 responses')] },
-      { label: 'Praise', parts: [t('Guests highlighted the venue and the auction pacing')] },
-      { label: 'Fix next time', parts: [t('Coat check queues at arrival; add a second station')] },
+      { label: 'Draft', parts: [t('Proposal ready: '), b('6 pages'), t(' with budget summary, inclusions and timeline')] },
+      { label: 'Option', parts: [t('Add a premium AV package as an optional '), b('$2,400'), t(' extra')] },
+      { label: 'Next', parts: [t('Send to the client, then track approval from your dashboard')] },
     ],
   },
 ]
 
-/* ---------- Solutions ---------- */
-export interface Solution {
-  id: SolutionId
+/* ---------- Core features highlighted in every use case ---------- */
+export interface CoreFeature {
+  id: 'ai' | 'expenses' | 'suppliers' | 'proposals'
   title: string
   icon: IconName
-  headline: string
   text: string
-  points: string[]
-  quote: [string, string]
-  stats: [IconName, string, string][]
 }
 
-export const SOLUTIONS: Solution[] = [
+export const CORE_FEATURES: CoreFeature[] = [
   {
-    id: 'corporate',
-    title: 'Corporate Event Teams',
-    icon: 'building',
-    headline: 'Run every internal and external event to one standard.',
-    text: 'Give your events team a single system for summits, offsites, launches and partner events, with the visibility leadership asks for.',
-    points: [
-      'Portfolio view across every event and region',
-      'Budget controls and approval-ready reports',
-      'Templates that keep every event on brand',
-    ],
-    quote: ['For corporate teams', 'Consolidate budgets, vendors and attendee data that used to live in separate spreadsheets.'],
-    stats: [
-      ['chart', 'Portfolio reporting', 'Spend and attendance across events'],
-      ['shield', 'Role-based access', 'Share with stakeholders safely'],
-    ],
+    id: 'ai',
+    title: 'AI-automated budgeting',
+    icon: 'spark',
+    text: 'Type a prompt like “Plan a 200-guest corporate conference in Sydney with a $50,000 budget” and get an instant category-wise budget.',
   },
   {
-    id: 'planners',
-    title: 'Professional Planners',
-    icon: 'plan',
-    headline: 'Manage many client events without losing track of one.',
-    text: "Keep each client's budget, vendors, timeline and guest list separate but easy to switch between.",
-    points: [
-      'Client-facing views with controlled access',
-      'Reusable checklists and vendor lists',
-      'Day-of itineraries shared with your crew',
-    ],
-    quote: ['For independent planners', 'Spend your time on the creative work instead of rebuilding the same spreadsheets.'],
-    stats: [
-      ['task', 'Reusable checklists', 'Start each event 80% done'],
-      ['vendor', 'Vendor directory', 'Your trusted suppliers, saved'],
+    id: 'expenses',
+    title: 'Expense tracking',
+    icon: 'chart',
+    text: 'See planned vs actual spend in real time, with overspend alerts before a line goes over.',
+  },
+  {
+    id: 'suppliers',
+    title: 'Supplier allocation',
+    icon: 'vendor',
+    text: 'Assign suppliers (venue, catering, AV, décor, transport) to budget lines and compare quotes side by side.',
+  },
+  {
+    id: 'proposals',
+    title: 'Send proposals',
+    icon: 'send',
+    text: 'Generate and send professional proposals to clients or suppliers from the platform.',
+  },
+]
+
+/* ---------- Use cases ---------- */
+export interface UseCase {
+  id: UseCaseId
+  /** Full audience name, used as the page section heading. */
+  title: string
+  /** Short label for nav, chips and cards. */
+  label: string
+  icon: IconName
+  headline: string
+  eventTypes: string[]
+  who: string
+  focus: string[]
+  problem: string
+  solution: string
+  /** Sample metric: clearly a placeholder until real results are available. */
+  result: { metric: string; label: string }
+  /** The example AI prompt shown for this audience. */
+  prompt: string
+  /** One audience-specific line per core feature, in CORE_FEATURES order. */
+  featureNotes: [string, string, string, string]
+}
+
+export const USE_CASES: UseCase[] = [
+  {
+    id: 'corporate',
+    title: 'Corporate event management teams',
+    label: 'Corporate teams',
+    icon: 'building',
+    headline: 'Get event budgets approved and keep every dollar in check.',
+    eventTypes: ['Conferences', 'Offsites', 'EOFY functions', 'Product launches', 'Christmas parties'],
+    who: 'In-house event, marketing and people teams who run several events a year and answer to finance.',
+    focus: ['Budget approvals', 'Cost control across multiple events', 'Finance-ready reports'],
+    problem:
+      'Budgets live in spreadsheets, approvals drag on, and finance cannot see what you have committed across your events until it is too late.',
+    solution:
+      'Build each budget from a prompt, send it for approval, then track spend across every event in one portfolio. Finance gets clean reports with GST shown.',
+    result: { metric: '40% faster budget approvals', label: 'Sample metric' },
+    prompt: 'Plan a 200-guest corporate conference in Sydney with a $50,000 budget.',
+    featureNotes: [
+      'Start every EOFY function or product launch from a budget that is ready for sign-off.',
+      'Watch spend across all your events and get alerted before a cost centre blows out.',
+      'Keep approved suppliers against each line so finance can match invoices fast.',
+      'Send approval packs to managers and external partners as proposals.',
     ],
   },
   {
     id: 'agencies',
-    title: 'Event Agencies',
+    title: 'Event organisers & agencies',
+    label: 'Agencies & organisers',
     icon: 'team',
-    headline: 'One workspace for your staff, clients and suppliers.',
-    text: 'Coordinate multiple teams and accounts with shared workspaces, permissions and a clear view of workload.',
-    points: [
-      'Workspaces per client account',
-      'Team workload and task ownership',
-      'Professional reports to send clients',
-    ],
-    quote: ['For agencies', 'Show clients live progress without another status meeting.'],
-    stats: [
-      ['team', 'Multi-team collaboration', 'Staff, clients and vendors'],
-      ['chart', 'Client reports', 'Budgets and results in one click'],
-    ],
-  },
-  {
-    id: 'conferences',
-    title: 'Conferences',
-    icon: 'stage',
-    headline: 'Sessions, speakers and thousands of attendees, organized.',
-    text: 'Handle registration, agendas, speakers and logistics for multi-day conferences in one connected plan.',
-    points: [
-      'Registration forms with session selection',
-      'Speaker and session management',
-      'Run of show for every room and day',
-    ],
-    quote: ['For conference hosts', 'Registration data flows straight into badges, catering counts and room planning.'],
-    stats: [
-      ['form', 'Registration', 'Branded forms, no code'],
-      ['time', 'Multi-track agendas', 'Every room, every day'],
+    headline: 'Run every client budget in one place and win work faster.',
+    eventTypes: ['Weddings', 'Festivals', 'Expos', 'Client events'],
+    who: 'Event organisers, wedding planners and agencies running many events for many clients at once.',
+    focus: ['Many client budgets', 'Supplier allocation', 'Faster proposals'],
+    problem:
+      'Every client has a different budget, a different supplier list and a deadline that was yesterday. Quoting takes hours and margins slip.',
+    solution:
+      'Keep each client’s budget separate, allocate suppliers to every line, and turn a finished budget into a proposal in minutes.',
+    result: { metric: '3 hours saved per proposal', label: 'Sample metric' },
+    prompt: 'Budget a 3,000-person food and wine festival in Brisbane with a $250,000 budget.',
+    featureNotes: [
+      'Draft a first-pass budget for a new enquiry before the client call ends.',
+      'Track each client’s costs separately so you know your margin on every job.',
+      'Reuse trusted suppliers across clients and compare their quotes in seconds.',
+      'Send branded proposals to clients and booking requests to suppliers.',
     ],
   },
   {
-    id: 'exhibitions',
-    title: 'Exhibitions & Expos',
-    icon: 'booth',
-    headline: 'Coordinate exhibitors, booths and floor logistics.',
-    text: 'Track exhibitors, booth assignments, deliverables and deadlines alongside visitor registration.',
-    points: [
-      'Exhibitor lists with deliverable tracking',
-      'Booth and floor assignments',
-      'Visitor registration and check-in',
-    ],
-    quote: ['For exhibition organizers', 'Keep exhibitor deadlines and floor logistics on one timeline.'],
-    stats: [
-      ['booth', 'Booth management', 'Assignments and status'],
-      ['vendor', 'Exhibitor portal', 'Deliverables and documents'],
+    id: 'community',
+    title: 'Non-corporate teams',
+    label: 'Community & not-for-profit',
+    icon: 'heart',
+    headline: 'Plan events that stay within your funds and grants.',
+    eventTypes: ['Community groups', 'Sporting clubs', 'Schools', 'Universities', 'Not-for-profits', 'Charities'],
+    who: 'Committees, volunteers and small teams running fundraisers, carnivals, formals and community days.',
+    focus: ['Simple budgeting', 'Shared expense tracking', 'Staying within limited funds or grants'],
+    problem:
+      'Funds and grants are limited, several volunteers add costs to one spreadsheet, and a surprise bill can sink the event.',
+    solution:
+      'Describe the event, get a simple budget, and let your committee log expenses in one shared place with alerts before you overspend.',
+    result: { metric: '9 in 10 events finished within budget', label: 'Sample metric' },
+    prompt: 'Plan a school fundraiser for 120 guests in Adelaide with an $8,000 budget.',
+    featureNotes: [
+      'Get a sensible starting budget even if you have never planned an event before.',
+      'Everyone on the committee logs costs in one place, with alerts as you near your limit.',
+      'Compare quotes from local suppliers so limited funds go further.',
+      'Send sponsorship and donation proposals to local businesses.',
     ],
   },
 ]
@@ -352,100 +389,304 @@ export interface HubNode {
 }
 
 export const HUB_NODES: HubNode[] = [
-  { key: 'budget', label: 'Budgets', icon: 'budget', x: 12, y: 15.2, initial: '$186.4k spent' },
-  { key: 'tasks', label: 'Tasks', icon: 'task', x: 12, y: 39.1, initial: '128 of 164 done' },
-  { key: 'timeline', label: 'Run of show', icon: 'time', x: 12, y: 63, initial: '42 days to go' },
-  { key: 'vendors', label: 'Vendors', icon: 'vendor', x: 12, y: 87, initial: '14 booked' },
-  { key: 'guests', label: 'Guest list', icon: 'guest', x: 88, y: 15.2, initial: '612 confirmed' },
-  { key: 'registration', label: 'Registration', icon: 'form', x: 88, y: 39.1, initial: '842 registered' },
-  { key: 'collab', label: 'Collaboration', icon: 'team', x: 88, y: 63, initial: '5 collaborators' },
-  { key: 'analytics', label: 'Analytics', icon: 'chart', x: 88, y: 87, initial: 'Report ready' },
+  { key: 'budget', label: 'Budget', icon: 'budget', x: 12, y: 15.2, initial: '$50,000 budget' },
+  { key: 'suppliers', label: 'Suppliers', icon: 'vendor', x: 12, y: 39.1, initial: '6 of 8 allocated' },
+  { key: 'proposals', label: 'Proposals', icon: 'send', x: 12, y: 63, initial: '3 sent' },
+  { key: 'expenses', label: 'Expenses', icon: 'chart', x: 12, y: 87, initial: '$31,200 spent' },
+  { key: 'guests', label: 'Guest list', icon: 'guest', x: 88, y: 15.2, initial: '200 guests' },
+  { key: 'tasks', label: 'Tasks', icon: 'task', x: 88, y: 39.1, initial: '12 of 18 done' },
+  { key: 'approvals', label: 'Approvals', icon: 'team', x: 88, y: 63, initial: '2 pending' },
+  { key: 'reports', label: 'Reports', icon: 'book', x: 88, y: 87, initial: 'Ready for finance' },
 ]
 
-/* ---------- Customers ---------- */
-export const BENEFITS: { icon: IconName; title: string; text: string }[] = [
-  { icon: 'time', title: 'Hours back every week', text: 'Stop re-typing updates across spreadsheets and email. Change it once and every view stays current.' },
-  { icon: 'budget', title: 'Budgets you can trust', text: 'Track estimates, actuals and vendor payments live, so overspend shows up while there is still time to act.' },
-  { icon: 'team', title: 'One team, one plan', text: "Give staff, clients and vendors the access they need, without exposing what they don't." },
-  { icon: 'form', title: 'Professional guest experience', text: 'Beautiful RSVP, registration and feedback forms that need no coding and get more responses.' },
-  { icon: 'bolt', title: 'Up and running fast', text: 'Start from templates, and get free setup help and data migration from our team.' },
-  { icon: 'plug', title: 'Works with your stack', text: 'Connect forms, CRMs and the rest of your tools through Zapier, with no code required.' },
-]
-
-/* ---------- FAQ ---------- */
-export const FAQS: { q: string; a: string }[] = [
-  {
-    q: 'How does the 60-day free trial work?',
-    a: 'Sign up and get every feature for 60 days with no credit card. At the end of the trial you choose a plan, or your account stays available to export your data.',
-  },
-  {
-    q: 'Can I upgrade or downgrade my plan anytime?',
-    a: 'Yes. You can upgrade or downgrade your plan at any time, and changes apply from your next billing cycle.',
-  },
-  {
-    q: 'Will you help me move my existing events over?',
-    a: "Yes. Setup and data migration assistance are free. Send us your spreadsheets and we'll help bring guests, vendors and budgets into Event Plan On.",
-  },
-  {
-    q: 'Can clients and vendors collaborate in my workspace?',
-    a: 'Yes. Invite staff, clients, contractors and vendors and choose what each person can see and edit, so everyone works from the same plan.',
-  },
-  {
-    q: 'Does Event Plan On integrate with my other tools?',
-    a: 'Event Plan On connects to thousands of apps through Zapier, including form builders, CRMs and email tools, without writing code.',
-  },
-  {
-    q: 'What kinds of events can I manage?',
-    a: 'Corporate events, conferences, exhibitions, galas, fundraisers, weddings and more. Templates help you start each type quickly.',
-  },
-]
-
-/* ---------- Footer ---------- */
-export interface FooterLink {
-  label: string
-  href: string
-  route?: import('@/types').RouteKey
-  solution?: SolutionId
+/* ---------- Testimonials (placeholders) ---------- */
+export interface Testimonial {
+  quote: string
+  name: string
+  role: string
+  company: string
+  city: string
 }
 
-export const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
+/** Sample testimonials. Replace every field with a real, approved customer quote before launch. */
+export const TESTIMONIALS: Testimonial[] = [
   {
-    title: 'Platform',
-    links: [
-      { label: 'Event Planning', href: '#platform' },
-      { label: 'Budget Calculator', href: '#platform' },
-      { label: 'Attendee Management', href: '#platform' },
-      { label: 'Forms & Surveys', href: '#platform' },
-      { label: 'AI Assistant', href: '#ai' },
+    quote:
+      'We built our EOFY function budget from one prompt and had it approved the same week. Finance can finally see what we have committed across every event.',
+    name: 'Sarah Mitchell',
+    role: 'Head of Events',
+    company: 'Harbourline Group',
+    city: 'Melbourne',
+  },
+  {
+    quote:
+      'Comparing supplier quotes and sending proposals from one place has saved us hours on every client event. Our margins are much easier to see.',
+    name: 'James Nguyen',
+    role: 'Director',
+    company: 'Brightside Events',
+    city: 'Sydney',
+  },
+  {
+    quote:
+      'Our committee all log expenses in one place now. We stayed inside our grant for the first time, and the report made the acquittal easy.',
+    name: 'Priya Raman',
+    role: 'Event Coordinator',
+    company: 'Southbank Community Club',
+    city: 'Brisbane',
+  },
+]
+
+/* ---------- Pricing (placeholders) ---------- */
+export interface Plan {
+  name: string
+  price: string
+  blurb: string
+  features: string[]
+  popular?: boolean
+}
+
+/** Sample plans. Prices are AUD per month and include GST. */
+export const PLANS: Plan[] = [
+  {
+    name: 'Starter',
+    price: '$29',
+    blurb: 'For occasional events and small committees.',
+    features: ['Up to 5 events a year', 'AI-built budgets', 'Expense tracking with alerts', '1 user'],
+  },
+  {
+    name: 'Team',
+    price: '$79',
+    blurb: 'For teams and planners running events all year.',
+    features: ['Up to 25 events a year', 'Supplier allocation and quote comparison', 'Proposals and approvals', 'Up to 5 users'],
+    popular: true,
+  },
+  {
+    name: 'Agency',
+    price: '$199',
+    blurb: 'For agencies and organisations with many events.',
+    features: ['Unlimited events', 'Separate client workspaces', 'Branded proposals and reports', 'Unlimited users'],
+  },
+]
+
+export const PLAN_VOLUME = ['1–5 events a year', '6–20 events a year', 'More than 20 events a year'] as const
+export const PLAN_BUDGET = ['Under $20,000', '$20,000 – $100,000', 'Over $100,000'] as const
+
+/* ---------- FAQ ---------- */
+export interface Faq {
+  q: string
+  /** Direct 1–2 sentence answer. Answer engines quote this first. */
+  short: string
+  /** Supporting detail. */
+  detail: string
+}
+
+export const FAQS: Faq[] = [
+  {
+    q: 'How does AI create an event budget?',
+    short:
+      'You describe your event in a plain-English prompt, and the AI returns a category-by-category budget in seconds. You can edit every line before you save it.',
+    detail:
+      'For example, “Plan a 200-guest corporate conference in Sydney with a $50,000 budget”. The AI uses your event type, guest count, location and total to split the money across venue, catering, AV, décor, speakers, marketing, transport, staffing and contingency. Nothing is locked in until you approve it.',
+  },
+  {
+    q: 'Can I track event expenses in real time?',
+    short:
+      'Yes. Every expense you log updates planned vs actual spend straight away, and you get an overspend alert when a budget line goes over.',
+    detail:
+      'Your whole team can add costs as they happen, so finance and managers always see the current position instead of waiting for a month-end spreadsheet.',
+  },
+  {
+    q: 'How does supplier allocation work?',
+    short:
+      'You assign each supplier (venue, catering, AV, décor, transport) to a budget line, then compare their quotes side by side.',
+    detail:
+      'Each supplier’s quote, deposit and payment date stays linked to its budget line, so you always know what is committed and what is still available to spend.',
+  },
+  {
+    q: 'Can I send proposals from the platform?',
+    short:
+      'Yes. Generate a professional proposal from your budget and send it to a client or supplier without leaving the platform.',
+    detail:
+      'Clients receive a clear summary of costs and inclusions, and you can see which proposals are sent, approved or still waiting.',
+  },
+  {
+    q: 'How much does it cost, and is GST included?',
+    short: 'Plans are priced in Australian dollars (AUD) and every price shown includes 10% GST.',
+    detail:
+      'You can upgrade or downgrade at any time. See the pricing page for plan details, and use the plan guide to match a plan to your event volume and budgets.',
+  },
+  {
+    q: 'How does the free trial work?',
+    short: `Start a ${TRIAL_DAYS}-day free trial with no credit card required, and choose a plan only if you want to continue.`,
+    detail:
+      'Use every feature on a real event. At the end of the trial you can pick a plan or let it lapse, and you can export your data either way.',
+  },
+  {
+    q: 'Is my data secure, and where is it stored?',
+    short:
+      'Your data is stored in data centres in Sydney, Australia, and is protected with encryption in transit and at rest.',
+    detail:
+      'Access is controlled by role, so finance, clients and suppliers only see what you allow. You can export your data at any time.',
+  },
+  {
+    q: 'What support do you offer, and when is it available?',
+    short: `Our Australian support team is available ${BUSINESS.hours}.`,
+    detail: `Reach us by email at ${BUSINESS.email} or call ${BUSINESS.phone}. We will also help you set up your first event during the free trial.`,
+  },
+  {
+    q: 'Can not-for-profits, schools and community groups use it?',
+    short:
+      'Yes. Event Plan On works for community groups, sporting clubs, schools, universities, not-for-profits and charities as well as corporate teams.',
+    detail:
+      'Simple budgeting, shared expense tracking and overspend alerts help limited funds and grants go further, and reports make acquittals easier.',
+  },
+  {
+    q: 'Do you support events in every Australian city?',
+    short:
+      'Yes. Teams use Event Plan On for events in Sydney, Melbourne, Brisbane, Perth, Adelaide and anywhere else in Australia.',
+    detail:
+      'Budgets are in AUD with GST shown, and AI budgets reflect typical Australian event costs for your location.',
+  },
+]
+
+/* ---------- About (sample copy: replace with your own) ---------- */
+export const ABOUT = {
+  story: [
+    'Event Plan On began when Alex Morgan spent a weekend rebuilding the same event budget spreadsheet for the fifth time, then watched a client event run over because nobody could see the real numbers.',
+    'We built Event Plan On so Australian event teams can describe an event, get a budget instantly, and stay in control of every dollar from the first quote to the final invoice.',
+  ],
+  mission: 'Give every Australian event team the confidence to budget well, spend wisely and deliver events that finish on budget.',
+  vision: 'Event budgets that are as easy to build as a conversation, and as clear to read as a bank statement.',
+  values: [
+    { title: 'Clarity first', text: 'We make costs easy to see and easy to explain, to finance, clients and committees alike.', icon: 'chart' as IconName },
+    { title: 'Built for Australia', text: 'AUD pricing, GST shown clearly and support that works on Australian time.', icon: 'pin' as IconName },
+    { title: 'People in control', text: 'AI suggests; you decide. Every number is yours to edit and approve.', icon: 'shield' as IconName },
+    { title: 'Useful over clever', text: 'We ship features that save you time on a real event, not ones that only look good in a demo.', icon: 'bolt' as IconName },
+  ],
+  team: [
+    {
+      name: 'Alex Morgan',
+      role: 'Founder & CEO',
+      bio: 'Fifteen years running corporate events across Sydney and Melbourne. Started Event Plan On after one too many budget spreadsheets.',
+    },
+    {
+      name: 'Mei Tanaka',
+      role: 'Head of Product',
+      bio: 'Previously built finance tools for growing teams. Cares about making numbers easy to understand for people who are not accountants.',
+    },
+    {
+      name: 'Daniel Okafor',
+      role: 'Customer Success Lead',
+      bio: 'Helps Australian teams get set up and get value in their first event, from corporate offsites to school fundraisers.',
+    },
+  ],
+}
+
+/* ---------- Solutions (by team and event type) ---------- */
+export interface Solution {
+  id: SolutionId
+  title: string
+  icon: IconName
+  headline: string
+  text: string
+  points: string[]
+  quote: [string, string]
+  stats: [IconName, string, string][]
+}
+
+export const SOLUTIONS: Solution[] = [
+  {
+    id: 'corporate',
+    title: 'Corporate Event Teams',
+    icon: 'building',
+    headline: 'Run every event to one budget standard.',
+    text: 'Give your events team one system for conferences, offsites, EOFY functions and launches, with the cost visibility finance asks for.',
+    points: [
+      'Portfolio view of spend across every event',
+      'Budget approvals and finance-ready reports',
+      'Templates that keep every event consistent',
+    ],
+    quote: ['For corporate teams', 'Bring budgets, suppliers and approvals out of separate spreadsheets and into one clear view.'],
+    stats: [
+      ['chart', 'Portfolio reporting', 'Spend across all your events'],
+      ['shield', 'Role-based access', 'Share numbers with stakeholders safely'],
     ],
   },
   {
-    title: 'Solutions',
-    links: [
-      { label: 'Corporate Events', href: '#solutions', solution: 'corporate' },
-      { label: 'Event Planners', href: '#solutions', solution: 'planners' },
-      { label: 'Agencies', href: '#solutions', solution: 'agencies' },
-      { label: 'Conferences', href: '#solutions', solution: 'conferences' },
-      { label: 'Non-Profits', href: '#solutions' },
-      { label: 'Wedding Planners', href: '#solutions' },
+    id: 'planners',
+    title: 'Professional Planners',
+    icon: 'plan',
+    headline: 'Manage many client budgets without losing track of one.',
+    text: "Keep each client's budget, suppliers and timeline separate but easy to switch between.",
+    points: [
+      'A separate budget for every client',
+      'Reusable supplier lists and quote comparisons',
+      'Proposals built from your budget in minutes',
+    ],
+    quote: ['For independent planners', 'Spend your time on the creative work instead of rebuilding the same spreadsheets.'],
+    stats: [
+      ['task', 'Reusable templates', 'Start each event from a proven budget'],
+      ['vendor', 'Supplier directory', 'Your trusted suppliers, saved'],
     ],
   },
   {
-    title: 'Resources',
-    links: [
-      { label: 'Blog', href: '#resources' },
-      { label: 'Guides', href: '#resources' },
-      { label: 'Live Demos', href: '#', route: 'demo' },
-      { label: 'Help Center', href: '#faq' },
+    id: 'agencies',
+    title: 'Event Agencies',
+    icon: 'team',
+    headline: 'One workspace for your staff, clients and suppliers.',
+    text: 'Coordinate multiple teams and client accounts with shared workspaces, permissions and a clear view of every margin.',
+    points: [
+      'A workspace for each client account',
+      'Team workload and task ownership',
+      'Professional reports and proposals to send clients',
+    ],
+    quote: ['For agencies', 'Show clients live budget progress without another status meeting.'],
+    stats: [
+      ['team', 'Multi-team collaboration', 'Staff, clients and suppliers'],
+      ['chart', 'Client reports', 'Budget vs actual in one click'],
     ],
   },
   {
-    title: 'Company',
-    links: [
-      { label: 'Pricing', href: '#', route: 'pricing' },
-      { label: 'One-on-One Demo', href: '#', route: 'demo' },
-      { label: 'Contact', href: '#faq' },
-      { label: 'Log in', href: '#', route: 'login' },
+    id: 'conferences',
+    title: 'Conferences',
+    icon: 'stage',
+    headline: 'Keep sessions, speakers and attendees inside budget.',
+    text: 'Control costs across venues, speakers, catering and AV as registrations and headcount change.',
+    points: [
+      'Catering and venue costs that follow your headcount',
+      'Speaker and session costs on one budget',
+      'Run sheets for every room and day',
+    ],
+    quote: ['For conference hosts', 'When registrations change, your catering and venue costs update with them.'],
+    stats: [
+      ['form', 'Registration', 'Branded forms, no code'],
+      ['time', 'Multi-track run sheets', 'Every room, every day'],
+    ],
+  },
+  {
+    id: 'exhibitions',
+    title: 'Exhibitions & Expos',
+    icon: 'booth',
+    headline: 'Coordinate exhibitors, booths and floor costs.',
+    text: 'Track exhibitor deliverables, floor logistics and supplier quotes against one clear event budget.',
+    points: [
+      'Supplier quotes compared side by side',
+      'Floor and booth costs tracked against budget',
+      'Visitor registration and check-in',
+    ],
+    quote: ['For exhibition organisers', 'Keep exhibitor deadlines, floor logistics and costs on one timeline.'],
+    stats: [
+      ['booth', 'Floor planning', 'Assignments and costs'],
+      ['vendor', 'Supplier management', 'Quotes, deposits and documents'],
     ],
   },
 ]
+
+/** The platform tools each audience leans on most. */
+export const SOLUTION_MODULES: Record<SolutionId, ModuleId[]> = {
+  corporate: ['budget', 'analytics', 'collab', 'planning'],
+  planners: ['budget', 'vendors', 'proposals', 'timeline'],
+  agencies: ['proposals', 'collab', 'analytics', 'vendors'],
+  conferences: ['registration', 'timeline', 'guests', 'budget'],
+  exhibitions: ['vendors', 'guests', 'timeline', 'registration'],
+}

@@ -1,5 +1,7 @@
 import { useRef } from 'react'
 import { PATHS } from '@/config/routes'
+import { TRIAL_CTA, TRIAL_LINE } from '@/config/business'
+import { definitionFor } from '@/data/seo'
 import { gsap, prefersReducedMotion, useGSAP } from '@/lib/gsap'
 import { Button } from '@/components/ui/Button'
 import { Container, Eyebrow } from '@/components/ui/layout'
@@ -8,7 +10,7 @@ import { MegaIcon } from '@/components/ui/atoms'
 import { HeroDashboard } from '@/components/product/HeroDashboard'
 import { MaskedLine } from '@/components/site/PageHero'
 
-const assurances = ['No credit card required', 'Free setup & data migration', 'Cancel anytime']
+const assurances = [TRIAL_LINE, 'Pricing in AUD, GST included', 'Built for Australian event teams']
 
 const chip =
   'absolute flex items-center gap-2.5 rounded-card border border-line bg-paper px-3.5 py-3 text-[12.5px] shadow-lift'
@@ -67,23 +69,22 @@ export function HeroScene() {
           <span className="rounded-full bg-coral-soft px-2.5 py-1 font-display text-[11px] font-bold tracking-[.08em] text-coral-deep uppercase">
             New
           </span>
-          <Eyebrow>AI suggestions now in every workspace</Eyebrow>
+          <Eyebrow>AI budgeting for Australian event teams</Eyebrow>
         </div>
 
-        <h1 className="mt-6 font-serif text-[clamp(48px,8.6vw,132px)] leading-[.93] font-medium tracking-[-0.04em]">
-          <MaskedLine>Every event</MaskedLine>
-          <MaskedLine>is a story.</MaskedLine>
-          <MaskedLine accent>Plan it like one.</MaskedLine>
+        <h1 className="mt-6 font-serif text-[clamp(38px,6.9vw,106px)] leading-[1.02] font-medium tracking-[-0.035em]">
+          <MaskedLine>AI event budgeting</MaskedLine>
+          <MaskedLine>that keeps every</MaskedLine>
+          <MaskedLine accent>dollar on track.</MaskedLine>
         </h1>
 
         <div className="mt-10 grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
           <p data-in="rest" className="max-w-[52ch] text-lg text-muted md:text-xl">
-            Budgets, tasks, guests, vendors and registration in one shared workspace, so your team, clients and suppliers
-            stay on the same page from first idea to final report.
+            {definitionFor(PATHS.home)}
           </p>
           <div data-in="rest" className="flex flex-wrap gap-3">
             <Button route="signup" size="lg" arrow>
-              Start 60-day free trial
+              {TRIAL_CTA}
             </Button>
             <Button to={PATHS.demo} variant="ghost" size="lg">
               Book a demo
@@ -109,28 +110,28 @@ export function HeroScene() {
             <div data-chip className={`${chip} static`}>
               <MegaIcon name="spark" size={30} />
               <div>
-                <strong className="block font-display text-[13px]">Catering is 8% over estimate</strong>
-                <span className="text-muted">Suggest moving $3.2k from décor?</span>
+                <strong className="block font-display text-[13px]">AV is $1,200 over budget</strong>
+                <span className="text-muted">Move $900 from décor?</span>
               </div>
             </div>
           </div>
           <div data-par="120" className="absolute top-24 -right-2 hidden sm:block xl:-right-12">
             <div data-chip className={`${chip} static`}>
               <span className="grid size-[30px] place-items-center rounded-[9px] bg-ok-soft text-ok-ink">
-                <Icon name="guest" size={17} />
+                <Icon name="vendor" size={17} />
               </span>
               <div>
-                <strong className="block font-display text-[13px] tabular-nums">+37 RSVPs today</strong>
-                <span className="text-muted">Registration form</span>
+                <strong className="block font-display text-[13px] tabular-nums">Quote accepted</strong>
+                <span className="text-muted">Harbour AV · $5,200 inc. GST</span>
               </div>
             </div>
           </div>
           <div data-par="50" className="absolute -bottom-8 left-[18%] hidden md:block">
             <div data-chip className={`${chip} static`}>
-              <MegaIcon name="time" size={30} />
+              <MegaIcon name="send" size={30} />
               <div>
-                <strong className="block font-display text-[13px]">Keynote moved to 9:30</strong>
-                <span className="text-muted">Run of show updated for 5 people</span>
+                <strong className="block font-display text-[13px]">Proposal approved</strong>
+                <span className="text-muted">Sent to the client 2 days ago</span>
               </div>
             </div>
           </div>
@@ -138,7 +139,7 @@ export function HeroScene() {
 
         <div data-in="rest" className="mt-24 flex items-center justify-center gap-3 text-xs font-semibold tracking-[.18em] text-muted uppercase">
           <span className="h-px w-10 bg-line" />
-          Scroll to follow the story
+          Scroll to see how it works
           <span className="h-px w-10 bg-line" />
         </div>
       </Container>

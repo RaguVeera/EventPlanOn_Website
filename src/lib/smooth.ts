@@ -26,7 +26,7 @@ export function scrollToTopNow(): void {
   window.scrollTo(0, 0)
 }
 
-export function scrollToElement(el: HTMLElement, offset = -96): void {
+export function scrollToElement(el: HTMLElement, offset = -128): void {
   if (instance) instance.scrollTo(el, { offset })
   else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }

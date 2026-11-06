@@ -1,19 +1,20 @@
 import { useRef } from 'react'
 import { PATHS } from '@/config/routes'
+import { BUSINESS, TRIAL_CTA, TRIAL_LINE } from '@/config/business'
 import { gsap, prefersReducedMotion, useGSAP } from '@/lib/gsap'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/layout'
 import { Icon } from '@/components/ui/Icon'
 
 const perks = [
-  'All 12+ tools unlocked for 60 days',
-  'No credit card, no setup fees',
-  'Free setup and data migration',
+  TRIAL_LINE,
+  'Pricing in AUD, GST included',
+  `Australian support team, ${BUSINESS.hours}`,
   'Upgrade, downgrade or cancel anytime',
 ]
 
 /** Final act: a coral circle expands from the bottom of the page to fill the screen. */
-export function ClosingScene({ lead = 'Your next great event' }: { lead?: string }) {
+export function ClosingScene({ lead = 'Your next event budget' }: { lead?: string }) {
   const root = useRef<HTMLElement>(null)
 
   useGSAP(
@@ -45,18 +46,18 @@ export function ClosingScene({ lead = 'Your next great event' }: { lead?: string
       <div data-closing-bg className="bg-coral py-28 text-white md:py-40">
         <Container className="grid items-end gap-12 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,.7fr)]">
           <div>
-            <h2 data-closing-in className="font-serif text-[clamp(44px,8vw,128px)] leading-[.95] font-medium tracking-[-0.04em]">
+            <h2 data-closing-in className="font-serif text-[clamp(35px,6.4vw,102px)] leading-[1.04] font-medium tracking-[-0.035em]">
               {lead} <em>starts here.</em>
             </h2>
             <p data-closing-in className="mt-8 max-w-[50ch] text-lg opacity-90 md:text-xl">
-              Try every feature free for 60 days, or book a personalized demo and we'll walk through your next event with you.
+              Describe your event, get an AI-built budget in minutes, and keep every dollar on track. Or book a demo and we will walk through it with you.
             </p>
             <div data-closing-in className="mt-9 flex flex-wrap gap-3">
               <Button route="signup" variant="white" size="lg" arrow>
-                Start 60-day free trial
+                {TRIAL_CTA}
               </Button>
               <Button to={PATHS.demo} variant="line" size="lg">
-                Book a personalized demo
+                Book a demo
               </Button>
             </div>
           </div>

@@ -9,24 +9,24 @@ function TaskBoardView() {
     {
       title: 'To do',
       cards: [
-        ['Book shuttle buses', 'DN', 'Feb 20'],
-        ['Order lanyards', 'SL', 'Feb 24'],
-        ['Brief volunteers', 'JP', 'Mar 10'],
+        ['Book shuttle buses', 'DN', '20 Feb'],
+        ['Order lanyards', 'SL', '24 Feb'],
+        ['Brief volunteers', 'JP', '10 Mar'],
       ],
     },
     {
       title: 'In progress',
       cards: [
-        ['Keynote run of show', 'AM', 'Feb 12'],
-        ['Badge proofs', 'SL', 'Feb 14'],
-        ['Catering headcount', 'JP', 'Feb 14'],
+        ['Keynote run of show', 'AM', '12 Feb'],
+        ['Badge proofs', 'SL', '14 Feb'],
+        ['Catering headcount', 'JP', '14 Feb'],
       ],
     },
     {
       title: 'Done',
       cards: [
-        ['Confirm AV vendor', 'RK', 'Feb 01'],
-        ['Publish schedule', 'AM', 'Jan 28'],
+        ['Confirm AV vendor', 'RK', '1 Feb'],
+        ['Publish schedule', 'AM', '28 Jan'],
       ],
     },
   ]
@@ -71,13 +71,13 @@ function BudgetOverviewView() {
     ['Marketing', 'bg-violet'],
   ]
   const payments: [string, string, string][] = [
-    ['SoundStage AV', 'Feb 01', '$8,000'],
-    ['Saffron Kitchens', 'Feb 15', '$12,500'],
-    ['Grand Hyatt', 'Mar 01', '$44,250'],
+    ['Harbour AV', '1 Feb', '$2,750'],
+    ['Saffron Kitchens', '15 Feb', '$8,500'],
+    ['Darling Venue Co.', '1 Mar', '$7,500'],
   ]
   return (
     <>
-      <EvHead title="Budget overview" sub="$186.4k of $300k spent" chip={<Chip tone="ok">On budget</Chip>} />
+      <EvHead title="Budget overview" sub="$31,200 of $50,000 spent · inc. GST" chip={<Chip tone="ok">On budget</Chip>} />
       <TwoCol>
         <Panel>
           <PanelTitle>Spend by category</PanelTitle>
@@ -143,7 +143,7 @@ function RunOfShowView() {
   ]
   return (
     <>
-      <EvHead title="Day 1 · Run of show" sub="Wed, Mar 18 · Main Hall" chip={<Chip tone="coral">● Live</Chip>} />
+      <EvHead title="Day 1 · Run of show" sub="Wed 18 Mar · Main Hall" chip={<Chip tone="coral">● Live</Chip>} />
       <div className="grid gap-1.5">
         {rows.map((r) => (
           <div

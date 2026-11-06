@@ -58,7 +58,7 @@ export function SolutionStack() {
               <span className={cn('font-display text-sm font-bold tracking-[.14em] uppercase', p.sub)}>
                 0{i + 1} · {s.title}
               </span>
-              <h3 className="mt-5 font-serif text-[clamp(30px,4.4vw,60px)] leading-[1] font-medium tracking-[-0.03em]">{s.headline}</h3>
+              <h3 className="mt-5 font-serif text-[clamp(26px,3.4vw,46px)] leading-[1.05] font-medium tracking-[-0.03em]">{s.headline}</h3>
               <p className={cn('mt-5 max-w-[48ch] text-base md:text-lg', p.sub)}>{s.text}</p>
               <SiteLink
                 to={`${PATHS.solutions}/${s.id}`}

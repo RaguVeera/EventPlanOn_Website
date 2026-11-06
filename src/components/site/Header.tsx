@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router'
 import { cn } from '@/lib/cn'
 import { PATHS } from '@/config/routes'
-import { MODULES, SOLUTIONS } from '@/data/content'
+import { MODULES, SOLUTIONS, USE_CASES } from '@/data/content'
+import { BUSINESS, TRIAL_CTA } from '@/config/business'
 import { ScrollTrigger, gsap, prefersReducedMotion, useGSAP } from '@/lib/gsap'
 import { lockScroll } from '@/lib/smooth'
 import { Button } from '@/components/ui/Button'
@@ -12,6 +13,7 @@ import { MegaIcon } from '@/components/ui/atoms'
 import type { IconName } from '@/types'
 import logo from '@/assets/logo.png'
 import { SiteLink } from './SiteLink'
+import { ContactList, EmailLink, PhoneLink } from './ContactDetails'
 
 interface DropItem {
   to: string
@@ -31,24 +33,30 @@ const NAV: NavItem[] = [
   {
     label: 'Platform',
     to: PATHS.platform,
-    cols: 'w-[560px] grid-cols-2',
+    cols: 'w-[600px] grid-cols-2',
     items: MODULES.map((m) => ({ to: `${PATHS.platform}/${m.id}`, label: m.label, icon: m.icon, text: m.title })),
   },
   {
     label: 'Solutions',
     to: PATHS.solutions,
-    cols: 'w-[420px] grid-cols-1',
-    items: SOLUTIONS.map((s) => ({ to: `${PATHS.solutions}/${s.id}`, label: s.title, icon: s.icon, text: s.headline })),
+    cols: 'w-[440px] grid-cols-1',
+    items: SOLUTIONS.map((x) => ({ to: `${PATHS.solutions}/${x.id}`, label: x.title, icon: x.icon, text: x.headline })),
   },
   { label: 'AI', to: PATHS.ai },
-  { label: 'Resources', to: PATHS.resources },
-  { label: 'Pricing', to: PATHS.pricing },
+  {
+    label: 'Use cases',
+    to: PATHS.useCases,
+    cols: 'w-[440px] grid-cols-1',
+    items: USE_CASES.map((u) => ({ to: `${PATHS.useCases}#${u.id}`, label: u.label, icon: u.icon, text: u.headline })),
+  },
+  { label: 'Blog', to: PATHS.blog },
+  { label: 'About', to: PATHS.about },
 ]
 
 export function Logo({ className }: { className?: string }) {
   return (
     <SiteLink to={PATHS.home} aria-label="Event Plan On home" className={cn('block shrink-0', className)}>
-      <img src={logo} alt="Event Plan On" width={1600} height={306} className="h-6 w-auto min-[375px]:h-7 sm:h-8" />
+      <img src={logo} alt="Event Plan On logo" width={1600} height={306} className="h-6 w-auto min-[375px]:h-7 sm:h-8" />
     </SiteLink>
   )
 }
@@ -166,6 +174,24 @@ export function Header() {
           mobileOpen && 'border-transparent bg-transparent backdrop-blur-none',
         )}
       >
+        {/* Contact strip: phone and email stay one tap away on every page. */}
+        <div className="border-b border-navy-line bg-navy text-[12.5px] text-navy-text">
+          <Container className="flex h-9 items-center justify-between gap-4">
+            <span className="hidden items-center gap-1.5 sm:flex">
+              <Icon name="clock" size={13} /> Australian support · {BUSINESS.hours}
+            </span>
+            <span className="flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-end sm:gap-6">
+              <span className="flex min-w-0 items-center gap-1.5">
+                <Icon name="phone" size={13} className="shrink-0" />
+                <PhoneLink className="truncate font-semibold text-white hover:text-coral-light" />
+              </span>
+              <span className="flex min-w-0 items-center gap-1.5">
+                <Icon name="mail" size={13} className="shrink-0" />
+                <EmailLink className="truncate font-semibold text-white hover:text-coral-light" />
+              </span>
+            </span>
+          </Container>
+        </div>
         <Container className="flex h-[72px] items-center gap-3 sm:gap-6">
           <Logo />
 
@@ -266,20 +292,20 @@ export function Header() {
         id="mobile-menu"
         aria-hidden={!mobileOpen}
         className={cn(
-          'fixed inset-0 z-[105] overflow-y-auto bg-navy px-6 pt-28 pb-10 text-white transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(.76,0,.24,1)] nav:hidden',
+          'fixed inset-0 z-[105] overflow-y-auto bg-navy px-6 pt-36 pb-10 text-white transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(.76,0,.24,1)] nav:hidden',
           mobileOpen
-            ? 'visible [clip-path:circle(150%_at_calc(100%-44px)_36px)]'
-            : 'invisible [clip-path:circle(0%_at_calc(100%-44px)_36px)]',
+            ? 'visible [clip-path:circle(150%_at_calc(100%-44px)_72px)]'
+            : 'invisible [clip-path:circle(0%_at_calc(100%-44px)_72px)]',
         )}
       >
         <ul className="m-0 grid list-none gap-1 p-0">
-          {[{ label: 'Home', to: PATHS.home }, ...NAV].map((item, i) => (
+          {[{ label: 'Home', to: PATHS.home }, ...NAV, { label: 'Contact', to: PATHS.contact }].map((item, i) => (
             <li key={item.label}>
               <SiteLink
                 to={item.to}
                 style={{ transitionDelay: mobileOpen ? `${250 + i * 60}ms` : '0ms' }}
                 className={cn(
-                  'flex items-baseline gap-4 border-b border-navy-line py-4 font-serif text-[clamp(32px,9vw,48px)] leading-none transition-[opacity,transform] duration-500',
+                  'flex items-baseline gap-4 border-b border-navy-line py-4 font-serif text-[clamp(30px,7.2vw,38px)] leading-none transition-[opacity,transform] duration-500',
                   mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0',
                 )}
               >
@@ -291,7 +317,7 @@ export function Header() {
         </ul>
         <div className="mt-8 grid gap-3">
           <Button route="signup" size="lg">
-            Start free trial
+            {TRIAL_CTA}
           </Button>
           <Button to={PATHS.demo} variant="line" size="lg">
             Book a demo
@@ -299,6 +325,9 @@ export function Header() {
           <Button route="login" variant="line" size="lg">
             Log in
           </Button>
+        </div>
+        <div className="mt-10 border-t border-navy-line pt-8 text-[15px] text-navy-text">
+          <ContactList dark />
         </div>
       </div>
     </>

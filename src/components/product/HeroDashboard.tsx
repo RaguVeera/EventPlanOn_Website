@@ -4,7 +4,7 @@ import { CountUp } from '@/components/ui/CountUp'
 import { EvHead, Kpi, KpiGrid, Panel, PanelTitle, TaskRow, TwoCol } from './primitives'
 import { cn } from '@/lib/cn'
 
-const sidebar = ['Overview', 'Tasks', 'Budget', 'Guests', 'Vendors', 'Agenda', 'Forms', 'Reports']
+const sidebar = ['Overview', 'Budget', 'Expenses', 'Suppliers', 'Proposals', 'Tasks', 'Guests', 'Reports']
 
 const unit = 'text-[13px] font-semibold text-muted'
 
@@ -31,7 +31,7 @@ export function HeroDashboard() {
         <div className="grid min-w-0 gap-3.5 p-[18px]">
           <EvHead
             title="Partner Summit 2027"
-            sub="Mar 18–19 · Grand Hyatt, Mumbai · 42 days to go"
+            sub="18–19 Mar · Darling Harbour, Sydney · 42 days to go"
             chip={<Chip tone="ok">● On track</Chip>}
           />
 
@@ -74,7 +74,7 @@ export function HeroDashboard() {
             <Panel>
               <PanelTitle aside="5">Due this week</PanelTitle>
               <TaskRow animate label="Confirm AV vendor" done owner="RK" />
-              <TaskRow animate label="Finalize keynote run of show" owner="AM" />
+              <TaskRow animate label="Finalise keynote run sheet" owner="AM" />
               <TaskRow animate label="Send badge proofs to print" owner="SL" />
               <TaskRow animate label="Catering headcount" owner="JP" />
             </Panel>

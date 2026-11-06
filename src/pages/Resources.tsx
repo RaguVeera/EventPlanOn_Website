@@ -1,7 +1,7 @@
 import { useRef, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 import { PATHS } from '@/config/routes'
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { definitionFor } from '@/data/seo'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { Container, Section } from '@/components/ui/layout'
 import { Icon } from '@/components/ui/Icon'
@@ -62,7 +62,6 @@ function Resource({ kind, title, text, artClass, art, to, cta, className }: Reso
 const glyph = (name: IconName, color: string) => <Icon name={name} size={64} className={color} />
 
 export default function Resources() {
-  usePageTitle('Resources')
   const root = useRef<HTMLDivElement>(null)
   useScrollReveal(root, '[data-reveal]')
 
@@ -70,36 +69,38 @@ export default function Resources() {
     <div ref={root}>
       <PageHero
         eyebrow="Resources"
-        lines={['Playbooks for']}
-        accent="better events."
-        lede="Guides, checklists and live walkthroughs for planning events that run on time and on budget."
+        lines={['Guides and checklists for']}
+        accent="better event budgets."
+        lede={definitionFor(PATHS.resources)}
       />
 
       <Section className="pt-0 md:pt-0">
         <Container>
           <div className="grid gap-5 md:grid-cols-3">
             <Resource
-              kind="Guide"
-              title="The event budget playbook: estimating, tracking and closing out"
-              text="A step-by-step method for building a budget your stakeholders will sign off on."
+              kind="Blog"
+              title="Practical guides for Australian event teams"
+              text="Budgeting, cost control, supplier quotes and proposals, written in plain English."
               artClass="bg-linear-to-br from-[#20232B] to-[#3A2A44]"
-              art={glyph('budget', 'text-coral')}
+              art={glyph('book', 'text-coral')}
+              to={PATHS.blog}
+              cta="Read the blog"
             />
             <Resource
-              kind="Checklist"
-              title="The 12-week conference planning checklist"
-              text="Every task, owner and deadline in the right order."
+              kind="Template"
+              title="Event budget template (AUD, GST shown)"
+              text="A category-by-category budget you can copy for your next event."
               artClass="bg-linear-to-br from-coral-soft to-[#F7CAD5]"
-              art={glyph('task', 'text-coral-deep')}
+              art={glyph('budget', 'text-coral-deep')}
             />
             <Resource
               kind="Live demo"
-              title="Join a scheduled live demo"
-              text="See how Event Plan On tools help you manage events, with Q&A."
+              title="See AI event budgeting in action"
+              text="Book a demo built around the kind of event you run, with time for questions."
               artClass="bg-linear-to-br from-[#E9EEF8] to-[#CFDBF2]"
               art={glyph('play', 'text-info-ink')}
               to={PATHS.demo}
-              cta="Save a seat"
+              cta="Book a demo"
             />
           </div>
         </Container>

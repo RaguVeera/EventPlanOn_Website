@@ -1,4 +1,5 @@
 import type { RouteKey } from '@/types'
+import { BUSINESS } from './business'
 
 /**
  * Internal pages use root-relative paths; links that leave the marketing site
@@ -11,19 +12,20 @@ export const ROUTES: Record<RouteKey, string> = {
   pricing: '/pricing',
 }
 
-/** Full plan and price details live in the app. */
-export const PLANS_URL = 'https://www.eventplanon.com/pricing'
-
 export const PATHS = {
   home: '/',
   platform: '/platform',
   solutions: '/solutions',
+  useCases: '/use-cases',
   ai: '/ai',
+  blog: '/blog',
   resources: '/resources',
   pricing: '/pricing',
+  about: '/about',
+  contact: '/contact',
   demo: '/demo',
 } as const
 
-export const SUPPORT_EMAIL = 'support@eventplanon.com'
+export const SUPPORT_EMAIL = BUSINESS.email
 
 export const isExternal = (href: string): boolean => /^https?:\/\//.test(href)

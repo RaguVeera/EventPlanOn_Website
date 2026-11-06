@@ -1,26 +1,26 @@
 import { useRef } from 'react'
-import { PATHS, PLANS_URL } from '@/config/routes'
+import { PATHS } from '@/config/routes'
+import { TRIAL_CTA, TRIAL_DAYS } from '@/config/business'
 import { MODULES } from '@/data/content'
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { definitionFor } from '@/data/seo'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { Button } from '@/components/ui/Button'
 import { Container, Eyebrow, Section } from '@/components/ui/layout'
 import { Icon } from '@/components/ui/Icon'
 import { PageHero } from '@/components/site/PageHero'
 import { SiteLink } from '@/components/site/SiteLink'
+import { TrialNote } from '@/components/site/TrialNote'
 import { ClosingScene } from '@/components/story/ClosingScene'
 import { Faq } from '@/components/sections/Faq'
+import { PricingPlans } from '@/components/sections/PricingPlans'
 
 const STEPS = [
-  { title: 'Sign up', text: 'Every feature is unlocked for 60 days. No credit card, no setup fees.' },
-  { title: 'Plan a real event', text: 'Bring your guests, vendors and budgets across. We help with setup and data migration for free.' },
-  { title: 'Choose what fits', text: 'At the end of the trial pick a plan, or keep your account available to export your data.' },
+  { title: 'Sign up', text: 'Start your free trial. No credit card, no commitment.' },
+  { title: 'Budget a real event', text: 'Describe an event in a prompt and let the AI build your first budget.' },
+  { title: 'Choose a plan', text: 'Pick a plan if it works for you, or let the trial lapse and export your data.' },
 ]
 
-const PROMISES = ['No credit card required', 'Free setup & data migration', 'Upgrade, downgrade or cancel anytime']
-
 export default function Pricing() {
-  usePageTitle('Pricing')
   const root = useRef<HTMLDivElement>(null)
   useScrollReveal(root, '[data-reveal]')
 
@@ -28,56 +28,43 @@ export default function Pricing() {
     <div ref={root}>
       <PageHero
         eyebrow="Pricing"
-        lines={['Try every feature,']}
-        accent="free for 60 days."
-        lede="Start with everything unlocked, then choose the plan that fits once you have planned a real event with it."
+        lines={['Event budget software,']}
+        accent="priced in AUD."
+        lede={definitionFor(PATHS.pricing)}
       >
         <div className="mt-9 flex flex-wrap items-center gap-3">
           <Button route="signup" size="lg" arrow>
-            Start 60-day free trial
+            {TRIAL_CTA}
           </Button>
           <Button to={PATHS.demo} variant="ghost" size="lg">
             Book a demo
           </Button>
-          <a
-            href={PLANS_URL}
-            target="_blank"
-            rel="noopener"
-            className="px-3 font-display text-sm font-bold text-coral-deep underline-offset-4 hover:underline"
-          >
-            View plans and prices →
-          </a>
         </div>
+        <TrialNote className="mt-5" />
       </PageHero>
+
+      <PricingPlans className="pt-0 md:pt-0" />
 
       <Section className="bg-paper">
         <Container>
-          <Eyebrow>How the trial works</Eyebrow>
+          <Eyebrow>How the {TRIAL_DAYS}-day trial works</Eyebrow>
           <ol className="m-0 mt-10 grid list-none gap-5 p-0 md:grid-cols-3">
             {STEPS.map((s, i) => (
               <li key={s.title} data-reveal className="grid content-start gap-3 rounded-card-lg bg-sand p-8">
-                <span className="font-serif text-7xl leading-none text-coral">{i + 1}</span>
-                <h3 className="font-serif text-3xl leading-tight font-medium">{s.title}</h3>
+                <span className="font-serif text-6xl leading-none text-coral">{i + 1}</span>
+                <h3 className="font-serif text-2xl leading-tight font-medium">{s.title}</h3>
                 <p className="text-muted">{s.text}</p>
               </li>
             ))}
           </ol>
-          <ul className="m-0 mt-8 flex list-none flex-wrap gap-x-8 gap-y-3 p-0">
-            {PROMISES.map((p) => (
-              <li key={p} className="flex items-center gap-2 text-[15px] font-medium">
-                <Icon name="check" size={18} className="text-ok" />
-                {p}
-              </li>
-            ))}
-          </ul>
         </Container>
       </Section>
 
       <Section>
         <Container>
-          <Eyebrow>Included in the trial</Eyebrow>
-          <h2 className="mt-3 mb-10 max-w-[18ch] font-serif text-[clamp(32px,4.6vw,64px)] leading-none font-medium tracking-[-0.03em]">
-            Everything. <em className="text-coral">No locked doors.</em>
+          <Eyebrow>Included in your trial</Eyebrow>
+          <h2 className="mt-3 mb-10 max-w-[20ch] font-serif text-[clamp(30px,3.7vw,51px)] leading-[1.05] font-medium tracking-[-0.03em]">
+            Every feature. <em className="text-coral">No locked doors.</em>
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {MODULES.map((m) => (
@@ -98,7 +85,7 @@ export default function Pricing() {
               <span className="grid size-10 shrink-0 place-items-center rounded-[11px] bg-coral text-white">
                 <Icon name="spark" size={18} />
               </span>
-              <strong className="font-display text-[15px]">AI assistant</strong>
+              <strong className="font-display text-[15px]">AI-automated budgeting</strong>
             </div>
           </div>
         </Container>

@@ -12,7 +12,7 @@ const SCRAPS: { label: string; x: number; y: number; r: number; tone: string }[]
   { label: 'Shared drive', x: 12, y: 80, r: 6, tone: 'bg-paper text-ink' },
   { label: 'Group chat (47 unread)', x: 48, y: 84, r: -6, tone: 'bg-coral-soft text-coral-deep' },
   { label: 'Seating draft v3', x: 66, y: 74, r: -9, tone: 'bg-paper text-ink' },
-  { label: 'Run-of-show (old)', x: 2, y: 36, r: 8, tone: 'bg-warn-soft text-warn-ink' },
+  { label: 'Run sheet (old)', x: 2, y: 36, r: 8, tone: 'bg-warn-soft text-warn-ink' },
   { label: 'Guest list (2).csv', x: 62, y: 34, r: -5, tone: 'bg-info-soft text-info-ink' },
   { label: 'Invoices.zip', x: 40, y: 62, r: 4, tone: 'bg-paper text-ink' },
   { label: 'who owns this??', x: 22, y: 44, r: -10, tone: 'bg-coral-soft text-coral-deep' },
@@ -99,19 +99,19 @@ export function ChaosScene() {
 
       <Container className="relative h-full flat:h-auto">
         <div className="absolute top-24 left-4 md:top-28 md:left-8 flat:static">
-          <Eyebrow className="text-coral-light">Act 01 · The problem</Eyebrow>
+          <Eyebrow className="text-coral-light">The problem</Eyebrow>
           <div className="relative mt-4 h-[clamp(120px,20vw,260px)] w-[min(92vw,900px)] flat:h-auto flat:w-auto">
             <h2
               data-text-a
-              className="absolute inset-0 font-serif flat:hidden text-[clamp(36px,6vw,92px)] leading-[.98] font-medium tracking-[-0.03em]"
+              className="absolute inset-0 font-serif flat:hidden text-[clamp(30px,4.8vw,74px)] leading-[.98] font-medium tracking-[-0.03em]"
             >
-              Your event lives in <em className="text-coral-light">twelve places.</em>
+              Your event budget lives in <em className="text-coral-light">twelve spreadsheets.</em>
             </h2>
             <h2
               data-text-b
-              className="absolute inset-0 font-serif flat:static text-[clamp(36px,6vw,92px)] leading-[.98] font-medium tracking-[-0.03em]"
+              className="absolute inset-0 font-serif flat:static text-[clamp(30px,4.8vw,74px)] leading-[.98] font-medium tracking-[-0.03em]"
             >
-              Now it lives in <em className="text-coral-light">one.</em>
+              Now it lives in <em className="text-coral-light">one place.</em>
             </h2>
           </div>
         </div>
@@ -129,7 +129,7 @@ export function ChaosScene() {
           ))}
 
           <div data-order className="absolute inset-x-0 top-0 mx-auto w-full max-w-[860px] flat:static">
-            <AppFrame url="app.eventplanon.com/events/partner-summit/budget" className="text-ink">
+            <AppFrame url="app.eventplanon.com/events/sydney-conference/budget" className="text-ink">
               <AppMain className="max-h-[52vh] overflow-hidden p-4 md:p-[22px] flat:max-h-none">
                 <BudgetView />
               </AppMain>

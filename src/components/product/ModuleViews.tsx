@@ -2,15 +2,16 @@ import type { ComponentType } from 'react'
 import type { AvatarKey, ModuleId, Tone } from '@/types'
 import { Avatar, Bar, Chip } from '@/components/ui/atoms'
 import { DataTable, EvHead, Kpi, KpiGrid, Panel, PanelTitle, SampleNote, TaskRow } from './primitives'
+import { ExpensesView, ProposalView, QuotesView } from './BudgetViews'
 
 /* Each view is the inside of an <AppMain>; its direct children are staggered in by GSAP. */
 
 function PlanningView() {
   const events: { name: string; date: string; tone: Tone; status: string; ready: number }[] = [
-    { name: 'Partner Summit 2027', date: 'Mar 18', tone: 'ok', status: 'On track', ready: 78 },
-    { name: 'Spring Charity Gala', date: 'Apr 05', tone: 'warn', status: 'Needs attention', ready: 54 },
-    { name: 'Sales Kickoff Offsite', date: 'Feb 10', tone: 'ok', status: 'On track', ready: 91 },
-    { name: 'Product Launch Expo', date: 'May 22', tone: 'info', status: 'Planning', ready: 22 },
+    { name: 'Partner Summit 2027', date: '18 Mar', tone: 'ok', status: 'On track', ready: 78 },
+    { name: 'Spring Charity Gala', date: '5 Apr', tone: 'warn', status: 'Needs attention', ready: 54 },
+    { name: 'Sales Kickoff Offsite', date: '10 Feb', tone: 'ok', status: 'On track', ready: 91 },
+    { name: 'Product Launch Expo', date: '22 May', tone: 'info', status: 'Planning', ready: 22 },
   ]
   return (
     <>
@@ -31,31 +32,10 @@ function PlanningView() {
   )
 }
 
-function BudgetView() {
-  const rows: [string, string, string, string, Tone][] = [
-    ['Venue', '$90,000', '$88,500', '−$1,500', 'ok'],
-    ['Catering', '$40,000', '$43,200', '+$3,200', 'warn'],
-    ['AV & production', '$35,000', '$29,800', '−$5,200', 'ok'],
-    ['Décor', '$18,000', '$11,400', '−$6,600', 'ok'],
-    ['Marketing', '$22,000', '$13,500', '−$8,500', 'ok'],
-  ]
-  return (
-    <>
-      <EvHead title="Budget · Partner Summit" sub="Total $300,000" chip={<Chip tone="ok">$113.6k remaining</Chip>} />
-      <DataTable
-        tabular
-        right={[1, 2, 3]}
-        head={['Category', 'Estimate', 'Actual', 'Variance']}
-        rows={rows.map(([cat, est, act, variance, tone]) => [cat, est, act, <Chip key={cat} tone={tone}>{variance}</Chip>])}
-      />
-    </>
-  )
-}
-
 function TasksView() {
   const tasks: { label: string; owner: AvatarKey; done: boolean; when: string }[] = [
     { label: 'Confirm AV vendor', owner: 'RK', done: true, when: 'Done' },
-    { label: 'Finalize keynote run of show', owner: 'AM', done: false, when: 'Due Thu' },
+    { label: 'Finalise keynote run sheet', owner: 'AM', done: false, when: 'Due Thu' },
     { label: 'Send badge proofs to print', owner: 'SL', done: false, when: 'Due Fri' },
     { label: 'Catering final headcount', owner: 'JP', done: false, when: 'Due Fri' },
     { label: 'Book shuttle buses', owner: 'DN', done: false, when: 'Next week' },
@@ -133,29 +113,6 @@ function GuestsView() {
   )
 }
 
-function VendorsView() {
-  const vendors: [string, string, string, Tone][] = [
-    ['Grand Hyatt', 'Venue', 'Contract signed', 'ok'],
-    ['SoundStage AV', 'Production', 'Deposit due Feb 1', 'warn'],
-    ['Saffron Kitchens', 'Catering', 'Quote under review', 'info'],
-    ['Bloom & Co.', 'Décor', 'Paid in full', 'ok'],
-  ]
-  return (
-    <>
-      <EvHead title="Vendors" sub="14 booked" chip={<Chip tone="warn">2 payments due</Chip>} />
-      {vendors.map(([name, kind, status, tone]) => (
-        <Panel key={name} className="flex flex-wrap items-center justify-between gap-2.5">
-          <div>
-            <strong className="font-display">{name}</strong>
-            <div className="text-xs text-muted">{kind}</div>
-          </div>
-          <Chip tone={tone}>{status}</Chip>
-        </Panel>
-      ))}
-    </>
-  )
-}
-
 function RegistrationView() {
   return (
     <>
@@ -228,11 +185,12 @@ function AnalyticsView() {
 
 export const MODULE_VIEWS: Record<ModuleId, ComponentType> = {
   planning: PlanningView,
-  budget: BudgetView,
+  budget: ExpensesView,
   tasks: TasksView,
   timeline: TimelineView,
   guests: GuestsView,
-  vendors: VendorsView,
+  vendors: QuotesView,
+  proposals: ProposalView,
   registration: RegistrationView,
   collab: CollabView,
   analytics: AnalyticsView,

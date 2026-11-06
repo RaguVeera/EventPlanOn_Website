@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { ScrollTrigger, gsap, prefersReducedMotion } from '@/lib/gsap'
-import { scrollToTopNow } from '@/lib/smooth'
+import { scrollToElement, scrollToTopNow } from '@/lib/smooth'
 import logo from '@/assets/logo.png'
 
 interface TransitionValue {
@@ -14,7 +14,7 @@ const TransitionContext = createContext<TransitionValue | null>(null)
 /** Owns the full-screen curtain that wipes between pages and resets scroll/triggers on every route change. */
 export function TransitionProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   const curtain = useRef<HTMLDivElement>(null)
   const busy = useRef(false)
   const current = useRef(pathname)
@@ -24,7 +24,18 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     current.current = pathname
     scrollToTopNow()
     const id = window.setTimeout(() => ScrollTrigger.refresh(), 120)
-    return () => window.clearTimeout(id)
+    // Arriving on /page#section: scroll to the section once the page has mounted and measured.
+    const jump = hash
+      ? window.setTimeout(() => {
+          const el = document.getElementById(hash.slice(1))
+          if (el) scrollToElement(el)
+        }, 900)
+      : undefined
+    return () => {
+      window.clearTimeout(id)
+      window.clearTimeout(jump)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   const go = useCallback(
@@ -32,7 +43,10 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       const target = to.split('#')[0] || current.current
       if (busy.current) return
       if (target === current.current) {
-        scrollToTopNow()
+        const id = to.split('#')[1]
+        const el = id ? document.getElementById(id) : null
+        if (el) scrollToElement(el)
+        else scrollToTopNow()
         return
       }
       if (prefersReducedMotion() || !curtain.current) {

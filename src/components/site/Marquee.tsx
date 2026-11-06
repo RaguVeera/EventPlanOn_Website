@@ -47,7 +47,7 @@ export function Marquee({ words, reverse, className }: MarqueeProps) {
               <span key={`${copy}-${i}`} className="flex items-center">
                 <span
                   className={cn(
-                    'px-6 font-serif text-[clamp(64px,11vw,168px)] leading-[1.05] font-medium tracking-[-0.03em] md:px-10',
+                    'px-6 font-serif text-[clamp(44px,7vw,104px)] leading-[1.05] font-medium tracking-[-0.03em] md:px-10',
                     i % 2 ? 'text-transparent [-webkit-text-stroke:1.5px_var(--color-ink)]' : 'text-ink',
                   )}
                 >
